@@ -117,7 +117,7 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .form-group { margin-bottom: 16px; }
+    .form-group { margin-bottom: 16px; text-align: left; }
 
     label {
       display: block;
@@ -288,11 +288,11 @@
       <h2>Acesso Restrito</h2>
       <p>Freitas Silqueira Advocacia</p>
       <form id="login-form">
-        <div class="form-group" style="text-align: left;">
+        <div class="form-group">
           <label>Usuário</label>
-          <input type="text" id="usuario-input" placeholder="Digite o usuário" required>
+          <input type="text" id="usuario-input" placeholder="Ex: Stefania" required>
         </div>
-        <div class="form-group" style="text-align: left;">
+        <div class="form-group">
           <label>Senha</label>
           <input type="password" id="senha-input" placeholder="Digite a senha" required>
         </div>
@@ -415,12 +415,13 @@
 
     document.getElementById("login-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const usuarioDigitado = document.getElementById("usuario-input").value.trim();
+      const usuarioDigitado = document.getElementById("usuario-input").value.trim().toLowerCase();
       const senhaDigitada = document.getElementById("senha-input").value.trim();
       const erroEl = document.getElementById("login-erro");
 
-      if (usuarioDigitado !== "Stefania") {
-        erroEl.textContent = "Usuário incorreto.";
+      // Aceita variações de digitação do nome (stefania)
+      if (usuarioDigitado !== "stefania") {
+        erroEl.textContent = "Usuário incorreto. Digite Stefania.";
         return;
       }
 

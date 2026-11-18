@@ -1,4 +1,4 @@
-// Senha mestre para permitir salvar e excluir postagens
+// Senha mestre do painel administrativo
 const SENHA_ADMIN = "Freitas@2026";
 
 export async function onRequestGet({ env }) {
@@ -29,6 +29,13 @@ export async function onRequestPost({ request, env }) {
     }
 
     const dados = await request.json();
+
+    // Apenas validação de login (não mexe no banco)
+    if (dados.acao === "validar") {
+      return new Response(JSON.stringify({ sucesso: true }), {
+        headers: { "Content-Type": "application/json" }
+      });
+    }
 
     // Excluir postagem existente
     if (dados.acao === "excluir" && dados.id) {

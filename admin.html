@@ -25,7 +25,6 @@
       min-height: 100vh;
     }
 
-    /* Tela de Login */
     #login-screen {
       display: flex;
       align-items: center;
@@ -64,7 +63,6 @@
       margin-bottom: 24px;
     }
 
-    /* Estrutura do Painel */
     #admin-panel {
       display: none;
       max-width: 1100px;
@@ -225,7 +223,6 @@
       display: block;
     }
 
-    /* Lista de Postagens */
     .post-list {
       display: flex;
       flex-direction: column;
@@ -291,10 +288,15 @@
       <h2>Acesso Restrito</h2>
       <p>Freitas Silqueira Advocacia</p>
       <form id="login-form">
-        <div class="form-group">
-          <input type="password" id="senha-input" placeholder="Digite a senha de administrador" required>
+        <div class="form-group" style="text-align: left;">
+          <label>Usuário</label>
+          <input type="text" id="usuario-input" placeholder="Digite o usuário" required>
         </div>
-        <button type="submit" class="btn btn-gold">Entrar no Painel</button>
+        <div class="form-group" style="text-align: left;">
+          <label>Senha</label>
+          <input type="password" id="senha-input" placeholder="Digite a senha" required>
+        </div>
+        <button type="submit" class="btn btn-gold" style="margin-top: 6px;">Entrar no Painel</button>
         <div id="login-erro" class="status-msg" style="color: #ff7b77;"></div>
       </form>
     </div>
@@ -314,7 +316,7 @@
     </header>
 
     <div class="grid-layout">
-      <!-- FORMULÁRIO DE PUBLICAÇÃO -->
+      <!-- FORMULÁRIO -->
       <div class="card">
         <h3 id="form-titulo">Nova Publicação</h3>
         <form id="post-form">
@@ -361,7 +363,7 @@
           </div>
 
           <div class="form-group">
-            <label>Imagem de Capa (Galeria ou Computador)</label>
+            <label>Imagem de Capa</label>
             <input type="file" id="arquivo-imagem" accept="image/*" onchange="processarImagem(event)">
             <div class="preview-box" id="preview-box">
               <img id="preview-img" src="" alt="Prévia">
@@ -374,13 +376,13 @@
           </div>
 
           <div class="form-group">
-            <label>Resumo Curto (Aparece no card do site)</label>
-            <textarea id="resumo" rows="2" placeholder="Breve descrição informativa..." required></textarea>
+            <label>Resumo Curto</label>
+            <textarea id="resumo" rows="2" placeholder="Breve descrição..." required></textarea>
           </div>
 
           <div class="form-group" id="grupo-conteudo">
             <label>Texto Completo do Artigo</label>
-            <textarea id="conteudo" rows="6" placeholder="Escreva o conteúdo informativo do artigo aqui..."></textarea>
+            <textarea id="conteudo" rows="6" placeholder="Escreva o conteúdo..."></textarea>
           </div>
 
           <div style="display: flex; gap: 10px;">
@@ -391,11 +393,11 @@
         </form>
       </div>
 
-      <!-- LISTA DE PUBLICAÇÕES SALVAS -->
+      <!-- LISTA -->
       <div class="card">
         <h3>Publicações no Ar</h3>
         <div id="lista-posts" class="post-list">
-          <p style="color: var(--text-muted); font-size: 0.9rem;">Carregando publicações...</p>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Carregando...</p>
         </div>
       </div>
     </div>
@@ -405,21 +407,25 @@
     let senhaAtual = sessionStorage.getItem("fs_admin_pass") || "";
     let postsCache = [];
 
-    // Define data de hoje por padrão
     document.getElementById("data").valueAsDate = new Date();
 
-    // Verifica se já está logado na sessão
     if (senhaAtual) {
       iniciarPainel();
     }
 
     document.getElementById("login-form").addEventListener("submit", async (e) => {
       e.preventDefault();
+      const usuarioDigitado = document.getElementById("usuario-input").value.trim();
       const senhaDigitada = document.getElementById("senha-input").value.trim();
       const erroEl = document.getElementById("login-erro");
+
+      if (usuarioDigitado !== "Stefania") {
+        erroEl.textContent = "Usuário incorreto.";
+        return;
+      }
+
       erroEl.textContent = "Verificando...";
 
-      // Testa a senha enviando uma requisição de validação leve
       try {
         const resp = await fetch("/api/posts", {
           method: "POST",
@@ -461,7 +467,6 @@
       document.getElementById("grupo-conteudo").style.display = tipo === "artigo" ? "block" : "none";
     }
 
-    // Otimiza e converte a imagem escolhida para Base64 leve
     function processarImagem(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -502,7 +507,7 @@
         postsCache = await resp.json();
 
         if (!postsCache.length) {
-          listaEl.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem;">Nenhuma publicação cadastrada ainda.</p>';
+          listaEl.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem;">Nenhuma publicação cadastrada.</p>';
           return;
         }
 
@@ -514,7 +519,7 @@
                 <span class="post-meta">${post.area} • ${formatarData(post.data)}</span>
               </div>
               <h4>${post.titulo}</h4>
-              <span class="post-meta">Status: ${post.status === 'publicado' ? 'Publicado' : 'Rascunho'}</span>
+              <span class="post-meta">Status: ${post.status}</span>
             </div>
             <div class="post-actions">
               <button class="btn btn-edit" onclick="editarPost(${post.id})">Editar</button>
@@ -533,8 +538,7 @@
       const statusEl = document.getElementById("form-status");
 
       btnSalvar.disabled = true;
-      btnSalvar.textContent = "Salvando na nuvem...";
-      statusEl.textContent = "";
+      btnSalvar.textContent = "Salvando...";
 
       const payload = {
         id: document.getElementById("post-id").value || null,
@@ -562,16 +566,16 @@
         const resultado = await resp.json();
         if (resultado.sucesso) {
           statusEl.style.color = "#68d391";
-          statusEl.textContent = "Publicação salva com sucesso!";
+          statusEl.textContent = "Salvo com sucesso!";
           limparFormulario();
           carregarPosts();
         } else {
           statusEl.style.color = "#ff7b77";
-          statusEl.textContent = "Erro: " + (resultado.erro || "Falha ao salvar.");
+          statusEl.textContent = "Erro: " + (resultado.erro || "Falha.");
         }
       } catch (err) {
         statusEl.style.color = "#ff7b77";
-        statusEl.textContent = "Erro de conexão ao salvar.";
+        statusEl.textContent = "Erro de conexão.";
       } finally {
         btnSalvar.disabled = false;
         btnSalvar.textContent = "Salvar Publicação";
@@ -607,7 +611,7 @@
     }
 
     async function excluirPost(id) {
-      if (!confirm("Tem certeza que deseja excluir esta publicação?")) return;
+      if (!confirm("Deseja excluir esta publicação?")) return;
 
       try {
         const resp = await fetch("/api/posts", {
@@ -619,11 +623,9 @@
           body: JSON.stringify({ acao: "excluir", id: id })
         });
         const res = await resp.json();
-        if (res.sucesso) {
-          carregarPosts();
-        }
+        if (res.sucesso) carregarPosts();
       } catch (err) {
-        alert("Erro ao excluir publicação.");
+        alert("Erro ao excluir.");
       }
     }
 

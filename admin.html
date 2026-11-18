@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo | Freitas Silqueira Advocacia</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-preto: #0c0c0c;
+            --bg-grafite: #141414;
+            --bg-grafite-claro: #1c1c1c;
+            --cor-dourado: #C5A059;
+            --cor-dourado-hover: #d4af6a;
+            --cor-texto: #cccccc;
+            --cor-branco: #ffffff;
+            --cor-borda: #2a2a2a;
+            --cor-sucesso: #27ae60;
+            --cor-erro: #e74c3c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background-color: var(--bg-preto); color: var(--cor-texto); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: 'Cinzel', serif; color: var(--cor-branco); }
+
+        /* TELA DE LOGIN */
+        #loginScreen {
+            display: flex; justify-content: center; align-items: center; height: 100vh;
+            background: linear-gradient(rgba(12, 12, 12, 0.85), rgba(12, 12, 12, 0.95)), url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+        }
+        .login-card {
+            background-color: var(--bg-grafite); border: 1px solid var(--cor-dourado); padding: 40px;
+            width: 100%; max-width: 400px; border-radius: 4px; box-shadow: 0 15px 35px rgba(0,0,0,0.8); text-align: center;
+        }
+        .login-card h2 { margin-bottom: 25px; font-size: 22px; color: var(--cor-branco); }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--cor-dourado); margin-bottom: 8px; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; background-color: var(--bg-preto); border: 1px solid var(--cor-borda); padding: 12px;
+            color: var(--cor-branco); font-family: 'Montserrat', sans-serif; font-size: 13px; border-radius: 2px; outline: none;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--cor-dourado); }
+        .btn-admin {
+            width: 100%; background-color: var(--cor-dourado); color: var(--bg-preto); border: none;
+            padding: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: background 0.3s;
+        }
+        .btn-admin:hover { background-color: var(--cor-dourado-hover); }
+
+        /* PAINEL PRINCIPAL */
+        #adminPanel { display: none; min-height: 100vh; padding: 40px; max-width: 1200px; margin: 0 auto; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--cor-borda); padding-bottom: 20px; margin-bottom: 30px; }
+        .admin-header h1 { font-size: 24px; color: var(--cor-dourado); }
+        .btn-sair { background: transparent; border: 1px solid var(--cor-erro); color: var(--cor-erro); padding: 8px 16px; cursor: pointer; font-size: 12px; text-transform: uppercase; transition: all 0.3s; }
+        .btn-sair:hover { background: var(--cor-erro); color: #fff; }
+
+        .admin-section { background-color: var(--bg-grafite); border: 1px solid var(--cor-borda); padding: 30px; border-radius: 4px; margin-bottom: 30px; }
+        .admin-section h3 { margin-bottom: 20px; font-size: 18px; border-bottom: 1px solid var(--cor-borda); padding-bottom: 10px; color: var(--cor-branco); }
+        
+        .lista-gerenciamento { margin-top: 20px; display: grid; gap: 15px; }
+        .item-gerenciado { background-color: var(--bg-preto); border: 1px solid var(--cor-borda); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 2px; }
+        .item-gerenciado h4 { font-size: 15px; color: var(--cor-branco); font-family: 'Montserrat', sans-serif; font-weight: 600; }
+        .item-gerenciado span { font-size: 12px; color: #888; }
+        .acoes-item { display: flex; gap: 10px; }
+        .btn-acao { background: transparent; border: 1px solid var(--cor-borda); color: var(--cor-texto); padding: 6px 12px; cursor: pointer; font-size: 11px; transition: all 0.3s; }
+        .btn-acao.deletar:hover { border-color: var(--cor-erro); color: var(--cor-erro); }
+        .btn-acao.editar:hover { border-color: var(--cor-dourado); color: var(--cor-dourado); }
+    </style>
+</head>
+<body>
+
+    <!-- TELA DE LOGIN DO ADMIN -->
+    <div id="loginScreen">
+        <div class="login-card">
+            <h2>Área Administrativa</h2>
+            <form onsubmit="fazerLogin(event)">
+                <div class="form-group">
+                    <label for="adminUser">Usuário</label>
+                    <input type="text" id="adminUser" required placeholder="Digite o usuário">
+                </div>
+                <div class="form-group">
+                    <label for="adminSenha">Senha</label>
+                    <input type="password" id="adminSenha" required placeholder="Digite a senha">
+                </div>
+                <button type="submit" class="btn-admin">Entrar no Painel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PAINEL DE GESTÃO -->
+    <div id="adminPanel">
+        <div class="admin-header">
+            <h1>Painel de Controle · Freitas Silqueira</h1>
+            <button onclick="fazerLogout()" class="btn-sair">Sair do Painel</button>
+        </div>
+
+        <!-- GERENCIAR BLOG -->
+        <div class="admin-section">
+            <h3>Gerenciar Artigos do Blog</h3>
+            <form onsubmit="salvarArtigoBlog(event)" style="margin-bottom: 30px;">
+                <input type="hidden" id="editIndex" value="">
+                <div class="form-group">
+                    <label>Título do Artigo *</label>
+                    <input type="text" id="postTitulo" required placeholder="Ex.: Como funciona a liminar...">
+                </div>
+                <div class="form-group">
+                    <label>Área Jurídica *</label>
+                    <select id="postArea" required>
+                        <option value="" disabled selected>Selecione a área...</option>
+                        <option value="Cível">Cível</option>
+                        <option value="Consumidor">Consumidor</option>
+                        <option value="Família">Família</option>
+                        <option value="Saúde">Saúde</option>
+                        <option value="Empresarial">Empresarial</option>
+                        <option value="Trabalhista">Trabalhista</option>
+                        <option value="Previdenciário">Previdenciário</option>
+                        <option value="Imobiliário">Imobiliário</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Data de Publicação *</label>
+                    <input type="text" id="postData" required placeholder="Ex.: 06/11/2026">
+                </div>
+                <div class="form-group">
+                    <label>URL da Imagem de Capa</label>
+                    <input type="text" id="postImagem" placeholder="https://exemplo.com/imagem.jpg">
+                </div>
+                <div class="form-group">
+                    <label>Resumo (Cards) *</label>
+                    <textarea id="postResumo" rows="3" required placeholder="Breve resumo que aparece na listagem..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Conteúdo Completo do Artigo *</label>
+                    <textarea id="postConteudo" rows="6" required placeholder="Texto completo do artigo..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Status *</label>
+                    <select id="postStatus" required>
+                        <option value="Publicado">Publicado</option>
+                        <option value="Rascunho">Rascunho</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-admin">Salvar Artigo</button>
+            </form>
+
+            <h4>Artigos Cadastrados</h4>
+            <div id="listaArtigosAdmin" class="lista-gerenciamento"></div>
+        </div>
+
+        <!-- GERENCIAR INSTAGRAM -->
+        <div class="admin-section">
+            <h3>Gerenciar Cards do Instagram (Exibidos no Blog)</h3>
+            <form onsubmit="salvarCardInstagram(event)" style="margin-bottom: 30px;">
+                <input type="hidden" id="editInstaIndex" value="">
+                <div class="form-group">
+                    <label>URL da Imagem do Post do Instagram *</label>
+                    <input type="text" id="instaImagem" required placeholder="https://exemplo.com/post.jpg">
+                </div>
+                <div class="form-group">
+                    <label>Link Direto para a Publicação no Instagram *</label>
+                    <input type="url" id="instaLink" required placeholder="https://www.instagram.com/p/...">
+                </div>
+                <button type="submit" class="btn-admin">Salvar Card do Instagram</button>
+            </form>
+
+            <h4>Cards Cadastrados</h4>
+            <div id="listaInstagramAdmin" class="lista-gerenciamento"></div>
+        </div>
+    </div>
+
+    <!-- SCRIPT DO PAINEL ADMIN -->
+    <script>
+        function fazerLogin(e) {
+            e.preventDefault();
+            const usuario = document.getElementById('adminUser').value.trim();
+            const senha = document.getElementById('adminSenha').value.trim();
+
+            if (usuario === 'admin' && senha === 'admin123') {
+                localStorage.setItem('fs_logado', 'true');
+                verificarSessao();
+            } else {
+                alert('Usuário ou senha incorretos.');
+            }
+        }
+
+        function fazerLogout() {
+            localStorage.removeItem('fs_logado');
+            verificarSessao();
+        }
+
+        function verificarSessao() {
+            const logado = localStorage.getItem('fs_logado');
+            if (logado === 'true') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                carregarListasAdmin();
+            } else {
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('adminPanel').style.display = 'none';
+            }
+        }
+
+        function salvarArtigoBlog(e) {
+            e.preventDefault();
+            const index = document.getElementById('editIndex').value;
+            const novoPost = {
+                titulo: document.getElementById('postTitulo').value.trim(),
+                area: document.getElementById('postArea').value,
+                data: document.getElementById('postData').value.trim(),
+                imagem: document.getElementById('postImagem').value.trim(),
+                resumo: document.getElementById('postResumo').value.trim(),
+                conteudo: document.getElementById('postConteudo').value.trim(),
+                status: document.getElementById('postStatus').value
+            };
+
+            let posts = JSON.parse(localStorage.getItem('fs_blog_posts') || '[]');
+            if (index === '') {
+                posts.unshift(novoPost);
+            } else {
+                posts[index] = novoPost;
+            }
+
+            localStorage.setItem('fs_blog_posts', JSON.stringify(posts));
+            e.target.reset();
+            document.getElementById('editIndex').value = '';
+            carregarListasAdmin();
+            alert('Artigo salvo com sucesso!');
+        }
+
+        function salvarCardInstagram(e) {
+            e.preventDefault();
+            const index = document.getElementById('editInstaIndex').value;
+            const novoInsta = {
+                imagem: document.getElementById('instaImagem').value.trim(),
+                link: document.getElementById('instaLink').value.trim()
+            };
+
+            let insta = JSON.parse(localStorage.getItem('fs_insta_ativos') || '[]');
+            if (index === '') {
+                insta.unshift(novoInsta);
+            } else {
+                insta[index] = novoInsta;
+            }
+
+            localStorage.setItem('fs_insta_ativos', JSON.stringify(insta));
+            e.target.reset();
+            document.getElementById('editInstaIndex').value = '';
+            carregarListasAdmin();
+            alert('Card do Instagram salvo com sucesso!');
+        }
+
+        function carregarListasAdmin() {
+            // Carregar Artigos
+            const posts = JSON.parse(localStorage.getItem('fs_blog_posts') || '[]');
+            const containerArtigos = document.getElementById('listaArtigosAdmin');
+            if (posts.length === 0) {
+                containerArtigos.innerHTML = '<span style="color: #777; font-size: 13px;">Nenhum artigo cadastrado.</span>';
+            } else {
+                let htmlArtigos = '';
+                posts.forEach((p, idx) => {
+                    htmlArtigos += `
+                        <div class="item-gerenciado">
+                            <div>
+                                <h4>${p.titulo}</h4>
+                                <span>Área: ${p.area} · Status: ${p.status}</span>
+                            </div>
+                            <div class="acoes-item">
+                                <button class="btn-acao editar" onclick="editarArtigo(${idx})">Editar</button>
+                                <button class="btn-acao deletar" onclick="deletarArtigo(${idx})">Excluir</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                containerArtigos.innerHTML = htmlArtigos;
+            }
+
+            // Carregar Instagram
+            const insta = JSON.parse(localStorage.getItem('fs_insta_ativos') || '[]');
+            const containerInsta = document.getElementById('listaInstagramAdmin');
+            if (insta.length === 0) {
+                containerInsta.innerHTML = '<span style="color: #777; font-size: 13px;">Nenhum card do Instagram cadastrado.</span>';
+            } else {
+                let htmlInsta = '';
+                insta.forEach((item, idx) => {
+                    htmlInsta += `
+                        <div class="item-gerenciado">
+                            <div>
+                                <h4>Card #${idx + 1}</h4>
+                                <span><a href="${item.link}" target="_blank" style="color: var(--cor-dourado);">Ver Link</a></span>
+                            </div>
+                            <div class="acoes-item">
+                                <button class="btn-acao deletar" onclick="deletarInstagram(${idx})">Excluir</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                containerInsta.innerHTML = htmlInsta;
+            }
+        }
+
+        function editarArtigo(idx) {
+            const posts = JSON.parse(localStorage.getItem('fs_blog_posts') || '[]');
+            const p = posts[idx];
+            if (!p) return;
+
+            document.getElementById('editIndex').value = idx;
+            document.getElementById('postTitulo').value = p.titulo;
+            document.getElementById('postArea').value = p.area;
+            document.getElementById('postData').value = p.data;
+            document.getElementById('postImagem').value = p.imagem || '';
+            document.getElementById('postResumo').value = p.resumo;
+            document.getElementById('postConteudo').value = p.conteudo;
+            document.getElementById('postStatus').value = p.status;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function deletarArtigo(idx) {
+            if (confirm('Deseja realmente excluir este artigo?')) {
+                let posts = JSON.parse(localStorage.getItem('fs_blog_posts') || '[]');
+                posts.splice(idx, 1);
+                localStorage.setItem('fs_blog_posts', JSON.stringify(posts));
+                carregarListasAdmin();
+            }
+        }
+
+        function deletarInstagram(idx) {
+            if (confirm('Deseja realmente excluir este card do Instagram?')) {
+                let insta = JSON.parse(localStorage.getItem('fs_insta_ativos') || '[]');
+                insta.splice(idx, 1);
+                localStorage.setItem('fs_insta_ativos', JSON.stringify(insta));
+                carregarListasAdmin();
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', verificarSessao);
+    </script>
+</body>
+</html>

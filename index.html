@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freitas Silqueira | Advocacia e Consultoria Jurídica</title>
+    <meta name="description" content="Soluções jurídicas especializadas em múltiplas frentes do Direito, unindo atendimento personalizado, rigor técnico, ética e atuação digital em todo o Brasil.">
+    <link rel="canonical" href="https://freitassilqueira.com.br/">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-preto: #0c0c0c;
+            --bg-grafite: #141414;
+            --bg-grafite-claro: #1c1c1c;
+            --cor-dourado: #C5A059;
+            --cor-dourado-hover: #d4af6a;
+            --cor-texto: #cccccc;
+            --cor-branco: #ffffff;
+            --cor-borda: #2a2a2a;
+            --cor-erro: #e74c3c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Montserrat', sans-serif; background-color: var(--bg-preto); color: var(--cor-texto); line-height: 1.8; overflow-x: hidden; }
+        h1, h2, h3, h4, h5 { font-family: 'Cinzel', serif; color: var(--cor-branco); letter-spacing: 1px; }
+
+        /* MENU FIXO NO TOPO */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; background-color: rgba(12, 12, 12, 0.95);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.25); display: flex; justify-content: space-between;
+            align-items: center; padding: 15px 60px; z-index: 1000; backdrop-filter: blur(10px);
+        }
+        .logo-link { text-decoration: none; display: flex; align-items: center; transition: opacity 0.3s; }
+        .logo-link:hover { opacity: 0.85; }
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo-area img { height: 50px; object-fit: contain; }
+        .logo-text h1 { font-size: 15px; letter-spacing: 2px; color: var(--cor-branco); margin-bottom: 2px; }
+        .logo-text span { font-size: 9px; color: var(--cor-dourado); letter-spacing: 3px; text-transform: uppercase; }
+
+        nav ul { list-style: none; display: flex; gap: 35px; align-items: center; }
+        nav ul li a { text-decoration: none; color: var(--cor-texto); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: color 0.3s, transform 0.3s; display: inline-block; }
+        nav ul li a:hover { color: var(--cor-dourado); transform: scale(1.1); }
+
+        .btn-contato-topo {
+            background-color: var(--cor-dourado); border: 1px solid var(--cor-dourado); color: var(--bg-preto);
+            padding: 10px 25px; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; cursor: pointer;
+            transition: all 0.3s; text-decoration: none; white-space: nowrap; font-weight: 700;
+        }
+        .btn-contato-topo:hover { transform: scale(1.05); background-color: #AA841B; color: #fff; }
+
+        /* HERO SECTION */
+        .hero {
+            height: 100vh; background: linear-gradient(rgba(12, 12, 12, 0.75), rgba(12, 12, 12, 0.92)), url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px;
+        }
+        .hero h2 { font-size: 46px; max-width: 950px; margin-bottom: 25px; line-height: 1.25; font-weight: 600; }
+        .hero h2 span { color: var(--cor-dourado); }
+        .hero p { font-size: 16px; max-width: 700px; color: #b5b5b5; margin-bottom: 40px; font-weight: 300; }
+
+        .btn-gold {
+            display: inline-block; background-color: var(--cor-dourado); color: var(--bg-preto);
+            padding: 15px 35px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; text-decoration: none; transition: background 0.3s;
+        }
+        .btn-gold:hover { background-color: var(--cor-dourado-hover); }
+
+        section { padding: 120px 60px; max-width: 1300px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 36px; margin-bottom: 15px; }
+        .section-header p { color: var(--cor-dourado); text-transform: uppercase; font-size: 11px; letter-spacing: 3px; }
+
+        /* CARDS DE ATUAÇÃO HOME */
+        .grid-atuacao { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+        .card-atuacao { background-color: var(--bg-grafite); border-top: 2px solid var(--cor-dourado); box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: background-color 0.3s; }
+        .card-atuacao:hover { background-color: var(--bg-grafite-claro); }
+        .card-header { padding: 30px 25px; display: flex; align-items: center; cursor: pointer; }
+        .card-header-content { display: flex; align-items: center; gap: 15px; width: 100%; }
+        .card-atuacao i.icon-principal { font-size: 24px; color: var(--cor-dourado); }
+        .card-atuacao h3 { font-size: 17px; }
+        .card-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease-out; padding: 0 25px; background-color: var(--bg-preto); }
+        .card-atuacao.ativo .card-body { max-height: 450px; padding: 20px 25px 30px 25px; border-top: 1px solid #222; }
+        .card-body p { font-size: 13px; color: #aaa; margin-bottom: 12px; }
+        .card-body ul { list-style: none; }
+        .card-body ul li { font-size: 13px; color: #b0b0b0; margin-bottom: 8px; position: relative; padding-left: 18px; }
+        .card-body ul li::before { content: "▪"; color: var(--cor-dourado); position: absolute; left: 0; }
+
+        /* SERVIÇOS HOME */
+        .servicos-section { background-color: var(--bg-grafite); width: 100%; padding: 120px 60px; }
+        .servicos-container { max-width: 1300px; margin: 0 auto; }
+        .grid-servicos { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .servico-box { background-color: var(--bg-preto); border-left: 3px solid var(--cor-dourado); border: 1px solid #222; transition: background-color 0.3s; }
+        .servico-box:hover { background-color: #111; }
+        .servico-header { padding: 30px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+        .servico-header h4 { font-size: 17px; color: var(--cor-branco); }
+        .servico-header i { color: var(--cor-dourado); font-size: 14px; }
+        .servico-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.4s ease-out; padding: 0 30px; background-color: var(--bg-grafite-claro); }
+        .servico-box.ativo .servico-body { max-height: 250px; padding: 20px 30px 25px 30px; border-top: 1px solid #222; }
+        .servico-body p { font-size: 13px; color: #aaa; }
+
+        /* ESCRITÓRIO HOME */
+        .escritorio-unificado-section { background-color: var(--bg-grafite); width: 100%; padding: 120px 60px; border-top: 1px solid #222; border-bottom: 1px solid #222; }
+        .escritorio-unificado-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 340px 1fr; gap: 60px; align-items: flex-end; padding-top: 20px; }
+        .foto-dra-deslocada { width: 100%; height: 380px; border-radius: 8px; border: 3px solid var(--cor-dourado); object-fit: cover; object-position: center 15%; box-shadow: 0px 10px 30px rgba(0,0,0,0.6); background-color: #0c0c0c; margin-top: 25px; }
+        .escritorio-unificado-texto h2 { font-size: 36px; margin-bottom: 15px; color: var(--cor-branco); }
+        .escritorio-unificado-texto p { font-size: 14px; color: #b0b0b0; margin-bottom: 18px; line-height: 1.8; text-align: justify; }
+
+        /* LOCALIZAÇÃO HOME */
+        .info-localizacao-section { background-color: var(--bg-preto); padding: 100px 60px; border-top: 1px solid #222; text-align: center; }
+        .localizacao-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1300px; margin: 0 auto 60px auto; }
+        .localizacao-card { background-color: var(--bg-grafite); border: 1px solid #222; padding: 40px 30px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .localizacao-card i { font-size: 28px; color: var(--cor-dourado); margin-bottom: 20px; }
+        .localizacao-card h3 { font-size: 18px; margin-bottom: 20px; color: var(--cor-branco); }
+        .localizacao-card p, .localizacao-card a { font-size: 13px; color: #aaa; text-decoration: none; line-height: 1.8; }
+        .endereco-link { display: block; color: #aaa; text-decoration: none; transition: color 0.3s; }
+        .endereco-link:hover { color: var(--cor-dourado); }
+
+        .bloco-cta-inferior { background-color: var(--bg-grafite); border: 1px solid #222; max-width: 1300px; margin: 0 auto; padding: 50px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); text-align: center; }
+        .bloco-cta-inferior h3 { font-size: 24px; margin-bottom: 12px; }
+        .bloco-cta-inferior p { font-size: 14px; color: #aaa; margin-bottom: 30px; }
+
+        /* 🗂️ SEÇÃO DO BLOG COMPLETA */
+        #secaoBlogCompleta { display: none; min-height: 100vh; background: linear-gradient(rgba(12, 12, 12, 0.88), rgba(12, 12, 12, 0.96)), url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover; background-attachment: fixed; padding-top: 150px; }
+        .blog-container-principal { max-width: 1300px; margin: 0 auto; padding: 0 60px 80px 60px; }
+        .blog-filter-bar { display: flex; gap: 12px; padding: 20px; margin-bottom: 40px; overflow-x: auto; white-space: nowrap; align-items: center; border-bottom: 1px solid var(--cor-borda); border-top: 1px solid var(--cor-borda); background-color: rgba(20, 20, 20, 0.6); backdrop-filter: blur(5px); }
+        .filter-title { font-size: 11px; color: var(--cor-dourado); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-right: 10px; }
+        .filter-btn { background-color: transparent; border: 1px solid #444; color: #ccc; padding: 8px 20px; border-radius: 20px; font-size: 12px; cursor: pointer; font-family: 'Montserrat', sans-serif; transition: all 0.3s; }
+        .filter-btn:hover { border-color: var(--cor-dourado); color: #fff; }
+        .filter-btn.active { background-color: var(--cor-dourado); border-color: var(--cor-dourado); color: var(--bg-preto); font-weight: 600; }
+
+        .blog-grid-completo { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .blog-card-item { background-color: rgba(20, 20, 20, 0.85); border: 1px solid #222; border-top: 3px solid var(--cor-dourado); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: transform 0.3s; }
+        .blog-card-item:hover { transform: translateY(-5px); }
+        
+        .blog-card-img { width: 100%; height: 280px; overflow: hidden; background-color: #0c0c0c; display: flex; align-items: center; justify-content: center; position: relative; }
+        .blog-card-img img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.4s; }
+        .blog-card-item:hover .blog-card-img img { transform: scale(1.03); }
+        
+        .blog-card-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .blog-card-item .tag-area { font-size: 10px; color: var(--cor-dourado); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .blog-card-item .data { font-size: 10px; color: #777; float: right; }
+        .blog-card-item h3 { font-size: 18px; margin: 12px 0; color: var(--cor-branco); }
+        .blog-card-item p { font-size: 13px; color: #aaa; margin-bottom: 20px; flex-grow: 1; }
+        
+        .btn-saiba-mais-card { align-self: flex-start; color: var(--cor-dourado); font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: gap 0.3s; margin-top: auto; }
+        .blog-card-item:hover .btn-saiba-mais-card { gap: 12px; color: var(--cor-dourado-hover); }
+
+        /* 📄 LEITOR COMPLETO DE ARTIGOS DO BLOG */
+        #leitorArtigoCompleto { display: none; max-width: 950px; margin: 0 auto; background-color: #1a1a1a; border: 1px solid var(--cor-borda); padding: 50px; border-radius: 4px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+        
+        .artigo-banner-container { 
+            width: 100%; background-color: #0c0c0c; border-radius: 4px; overflow: hidden; margin-bottom: 35px; border: 1px solid #333; display: flex; align-items: center; justify-content: center; padding: 15px; 
+        }
+        .artigo-banner-principal { 
+            max-width: 100%; max-height: 500px; width: auto; height: auto; object-fit: contain; display: block; border-radius: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); 
+        }
+
+        .artigo-meta { font-size: 11px; color: var(--cor-dourado); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
+        .artigo-meta span { color: #888; float: right; }
+        .artigo-titulo-full { font-size: 34px; margin-bottom: 25px; line-height: 1.3; color: var(--cor-branco); }
+        .artigo-corpo-texto { font-size: 15px; color: #e0e0e0; line-height: 1.9; text-align: justify; margin-bottom: 50px; white-space: pre-line; }
+
+        /* ESTRUTURA DUPLA CONTATO ABA BLOG */
+        .secao-contato-dupla { background-color: var(--bg-grafite); width: 100%; padding: 100px 60px; border-top: 1px solid #222; }
+        .container-contato-duplo { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; align-items: start; }
+        .contato-info-lado { padding-right: 20px; }
+        .super-tag-contato { display: inline-block; color: var(--cor-dourado); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; margin-bottom: 15px; position: relative; padding-left: 30px; }
+        .super-tag-contato::before { content: ""; position: absolute; left: 0; top: 50%; width: 20px; height: 1px; background-color: var(--cor-dourado); }
+        .contato-info-lado h2 { font-size: 42px; line-height: 1.2; margin-bottom: 15px; color: var(--cor-branco); }
+        .contato-info-lado p.subtitulo-frase { font-size: 16px; color: var(--cor-dourado); margin-bottom: 25px; font-weight: 300; font-style: italic; }
+        .contato-info-lado p.desc-chamada { font-size: 14px; color: #a0a0a0; margin-bottom: 35px; line-height: 1.7; }
+        .lista-canais-diretos { margin-bottom: 40px; }
+        .canal-item { display: flex; align-items: center; gap: 15px; margin-bottom: 18px; }
+        .canal-item .icon-circle { width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(197, 160, 89, 0.4); display: flex; align-items: center; justify-content: center; color: var(--cor-dourado); font-size: 16px; flex-shrink: 0; }
+        .canal-item a, .canal-item span { color: var(--cor-branco); font-size: 14px; text-decoration: none; transition: color 0.3s; }
+        .canal-item a:hover { color: var(--cor-dourado); }
+        .bloco-unidades-locais { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 25px; }
+        .bloco-unidades-locais h4 { font-size: 11px; color: var(--cor-dourado); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
+        .unidade-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 20px; }
+        .unidade-item i { color: var(--cor-dourado); font-size: 14px; margin-top: 4px; }
+        .unidade-item strong { color: #fff; font-size: 13px; display: block; }
+        .unidade-item p { font-size: 12px; color: #888; line-height: 1.5; }
+
+        /* MAPA ESCURO COM PINO DOURADO CUSTOMIZADO */
+        .mapa-link-wrapper { display: block; width: 100%; height: 220px; border-radius: 4px; border: 1px solid rgba(197, 160, 89, 0.4); overflow: hidden; margin-top: 15px; position: relative; transition: all 0.3s ease; text-decoration: none; background-color: #141414; }
+        .mapa-link-wrapper:hover { border-color: var(--cor-dourado); box-shadow: 0 0 20px rgba(197, 160, 89, 0.35); }
+        .mapa-link-wrapper iframe { width: 100%; height: 100%; border: 0; filter: grayscale(100%) contrast(1.2) invert(90%); }
+        .pin-dourado-customizado { position: absolute; top: 41%; left: 54.5%; transform: translate(-50%, -100%); z-index: 10; color: var(--cor-dourado); font-size: 28px; filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 4px rgba(197, 160, 89, 0.9)); animation: pulsePin 2s infinite alternate ease-in-out; pointer-events: none; }
+        @keyframes pulsePin { 0% { transform: translate(-50%, -100%) scale(1); } 100% { transform: translate(-50%, -112%) scale(1.12); } }
+        .mapa-overlay-texto { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(12, 12, 12, 0.92); padding: 9px 12px; font-size: 11px; color: var(--cor-dourado); text-align: center; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; border-top: 1px solid rgba(197, 160, 89, 0.3); transition: all 0.3s; z-index: 11; }
+        .mapa-link-wrapper:hover .mapa-overlay-texto { background: var(--cor-dourado); color: var(--bg-preto); }
+
+        /* FORMULÁRIO DO BLOG COM ENVIO WHATSAPP */
+        .card-formulario-claro { background-color: #f7f6f2; padding: 45px 40px; border-radius: 4px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); color: #222; }
+        .card-formulario-claro h3 { font-family: 'Cinzel', serif; font-size: 26px; color: #111; margin-bottom: 25px; }
+        .campo-form-grupo { margin-bottom: 20px; text-align: left; }
+        .campo-form-grupo label { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #555; margin-bottom: 8px; }
+        .campo-form-grupo input, .campo-form-grupo select, .campo-form-grupo textarea { width: 100%; background-color: #ededeb; border: 1px solid #dcdcd8; padding: 14px 16px; font-family: 'Montserrat', sans-serif; font-size: 13px; color: #111; outline: none; transition: all 0.3s; border-radius: 2px; }
+        .campo-form-grupo input:focus, .campo-form-grupo select:focus, .campo-form-grupo textarea:focus { border-color: var(--cor-dourado); background-color: #fff; }
+        
+        .form-row-duplo { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; }
+
+        .btn-enviar-wpp-card { width: 100%; background-color: var(--cor-dourado); color: var(--bg-preto); border: none; padding: 16px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; border-radius: 2px; margin-top: 10px; }
+        .btn-enviar-wpp-card:hover { background-color: #AA841B; color: #fff; }
+        .nota-confidencialidade { font-size: 11px; color: #777; text-align: center; margin-top: 18px; }
+
+        /* 📸 SEÇÃO DO INSTAGRAM */
+        .secao-redes-sociais-blog { margin-top: 70px; background-color: var(--bg-grafite); border: 1px solid #222; padding: 50px 40px; border-radius: 4px; text-align: center; }
+        .secao-redes-sociais-blog p { font-size: 13px; color: #aaa; margin-bottom: 25px; }
+
+        .titulo-instagram-link { display: inline-block; color: var(--cor-branco); text-decoration: none; transition: color 0.3s; margin-bottom: 10px; }
+        .titulo-instagram-link h3 { font-size: 24px; font-family: 'Cinzel', serif; display: inline; }
+        .titulo-instagram-link:hover { color: var(--cor-dourado); }
+
+        .grid-posts-instagram { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px; 
+            max-width: 900px; 
+            margin: 0 auto; 
+        }
+
+        .card-insta-item { 
+            background-color: var(--bg-preto); 
+            border: 1px solid #2a2a2a; 
+            border-radius: 4px; 
+            overflow: hidden; 
+            text-decoration: none; 
+            display: block; 
+            aspect-ratio: 1 / 1; 
+            transition: transform 0.3s, border-color 0.3s; 
+        }
+
+        .card-insta-item:hover { 
+            transform: translateY(-5px); 
+            border-color: var(--cor-dourado); 
+        }
+
+        .card-insta-item img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+        }
+
+        /* 💬 CAMPO BOTÃO WHATSAPP FALE CONOSCO */
+        .campo-wpp-fale-conosco { margin-top: 50px; background-color: var(--bg-grafite-claro); border-left: 4px solid var(--cor-dourado); border: 1px solid #262626; padding: 40px; text-align: center; border-radius: 4px; }
+        .campo-wpp-fale-conosco h4 { font-size: 20px; margin-bottom: 10px; color: var(--cor-branco); }
+        .campo-wpp-fale-conosco p { font-size: 13px; color: #aaa; margin-bottom: 25px; }
+
+        /* 📌 BLOCO DE INFORMAÇÕES DO ESCRITÓRIO NO RODAPÉ */
+        .bloco-info-escritorio-rodape { background-color: var(--bg-grafite); border-top: 1px solid var(--cor-dourado); padding: 50px 60px; margin-top: 70px; }
+        .grid-info-escritorio { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 40px; text-align: center; }
+        .item-info-escritorio i { font-size: 24px; color: var(--cor-dourado); margin-bottom: 12px; }
+        .item-info-escritorio h4 { font-size: 14px; margin-bottom: 8px; color: var(--cor-branco); text-transform: uppercase; letter-spacing: 1.5px; }
+        .item-info-escritorio p, .item-info-escritorio a { font-size: 12px; color: #aaa; text-decoration: none; line-height: 1.8; }
+        .item-info-escritorio a:hover { color: var(--cor-dourado); }
+
+        .btn-voltar-site { display: inline-block; margin-bottom: 25px; color: var(--cor-dourado); text-decoration: none; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; }
+        .btn-voltar-site:hover { text-decoration: underline; }
+
+        /* RODAPÉ FINAL */
+        footer { background-color: #080808; border-top: 1px solid #222; padding: 30px 60px; text-align: center; font-size: 11px; color: #666; letter-spacing: 1px; }
+
+        /* BOTÃO FIXO WHATSAPP (CANTO INFERIOR DIREITO) */
+        .btn-wpp-float { position: fixed; bottom: 25px; right: 25px; background-color: var(--cor-dourado); color: var(--cor-branco); display: flex; align-items: center; height: 55px; min-width: 55px; padding: 0 16px; border-radius: 30px; text-decoration: none; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); z-index: 9999; transition: all 0.3s ease; overflow: hidden; }
+        .btn-wpp-float i { font-size: 26px; flex-shrink: 0; color: var(--bg-preto); }
+        .btn-wpp-float span { max-width: 0; opacity: 0; white-space: nowrap; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; transition: max-width 0.4s ease, opacity 0.3s ease, margin 0.3s ease; margin-left: 0; color: var(--bg-preto); }
+        .btn-wpp-float:hover span { max-width: 200px; opacity: 1; margin-left: 10px; }
+
+        /* ⬆️ BOTÃO VOLTAR AO TOPO (CANTO INFERIOR ESQUERDO) */
+        .btn-topo-float {
+            position: fixed; bottom: 25px; left: 25px; background-color: var(--bg-grafite-claro); color: var(--cor-dourado);
+            border: 1px solid var(--cor-dourado); width: 45px; height: 45px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            z-index: 9998; opacity: 0; visibility: hidden; transition: all 0.3s ease; cursor: pointer;
+        }
+        .btn-topo-float.visivel { opacity: 1; visibility: visible; }
+        .btn-topo-float:hover { background-color: var(--cor-dourado); color: var(--bg-preto); transform: translateY(-3px); }
+        .btn-topo-float i { font-size: 16px; }
+
+        @media (max-width: 900px) {
+            header { padding: 12px 20px; }
+            nav { display: none; }
+            section, #secaoBlogCompleta, .blog-container-principal { padding: 70px 20px; }
+            #leitorArtigoCompleto { padding: 25px; }
+            .artigo-titulo-full { font-size: 24px; }
+            .artigo-banner-container { padding: 10px; }
+            .container-contato-duplo { grid-template-columns: 1fr; gap: 40px; }
+            .bloco-info-escritorio-rodape { padding: 40px 20px; }
+            .grid-posts-instagram { grid-template-columns: 1fr; max-width: 320px; }
+            .btn-topo-float { left: 15px; bottom: 25px; width: 40px; height: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MENU FIXO NO TOPO -->
+    <header>
+        <a href="/" onclick="navegarRota(event, '/', 'inicio')" class="logo-link">
+            <div class="logo-area">
+                <img src="logosemfundo.png" alt="Freitas Silqueira Advocacia">
+                <div class="logo-text">
+                    <h1>Freitas Silqueira</h1>
+                    <span>Advocacia e Consultoria Jurídica</span>
+                </div>
+            </div>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="/" onclick="navegarRota(event, '/', 'inicio')">Início</a></li>
+                <li><a href="/areas" onclick="navegarRota(event, '/areas', 'atuacao')">Áreas</a></li>
+                <li><a href="/servicos" onclick="navegarRota(event, '/servicos', 'servicos')">Serviços</a></li>
+                <li><a href="/escritorio" onclick="navegarRota(event, '/escritorio', 'escritorio')">O Escritório</a></li>
+                <li><a href="/blog" onclick="navegarRota(event, '/blog', 'blog')">Blog</a></li>
+                <li><a href="/contato" onclick="navegarRota(event, '/contato', 'localizacao')">Contato</a></li>
+            </ul>
+        </nav>
+        <a href="https://wa.me/5511915270860?text=Olá,%20estou%20vindo%20do%20site%20Freitas%20Silqueira%20e%20gostaria%20de%20agendar%20um%20atendimento%20jurídico." target="_blank" class="btn-contato-topo"><strong>Fale Conosco</strong></a>
+    </header>
+
+    <!-- TELA INICIAL -->
+    <div id="conteudoSitePrincipal">
+
+        <!-- HERO SECTION -->
+        <section id="inicio" class="hero" style="max-width: 100%;">
+            <h2>Excelência, Rigor Técnico e Defesa <span>Estratégica</span>.</h2>
+            <p>Soluções jurídicas especializadas em múltiplas frentes do Direito, unindo atendimento personalizado, rigor técnico, ética e atuação digital em todo o Brasil.</p>
+            <div>
+                <a href="https://wa.me/5511915270860?text=Olá,%20estou%20vindo%20do%20site%20Freitas%20Silqueira%20e%20gostaria%20de%20agendar%20um%20atendimento%20jurídico." target="_blank" class="btn-gold"><i class="fab fa-whatsapp"></i> Fale Conosco pelo WhatsApp</a>
+            </div>
+        </section>
+
+        <!-- ÁREAS DE ATUAÇÃO -->
+        <section id="atuacao">
+            <div class="section-header">
+                <p>Especialidades</p>
+                <h2>Áreas de Atuação Jurídica</h2>
+                <p style="font-size: 13px; color: #888; margin-top: 5px;">Clique em uma área para expandir e ver os detalhes completos.</p>
+            </div>
+            <div class="grid-atuacao">
+                <div class="card-atuacao" onclick="toggleCard(this)"><div class="card-header"><div class="card-header-content"><i class="fas fa-balance-scale icon-principal"></i><h3>Direito Cível & Contratual</h3></div></div><div class="card-body"><p>Proteção patrimonial, obrigações e reparações:</p><ul><li>Elaboração e revisão de contratos complexos</li><li>Responsabilidade civil e indenizações</li><li>Cobranças e recuperação de crédito</li><li>Direito Imobiliário</li></ul></div></div>
+                <div class="card-atuacao" onclick="toggleCard(this)"><div class="card-header"><div class="card-header-content"><i class="fas fa-shield-alt icon-principal"></i><h3>Direito do Consumidor</h3></div></div><div class="card-body"><p>Defesa contra práticas abusivas e falhas em serviços:</p><ul><li>Ações contra bancos, companhias aéreas e planos</li><li>Negativação indevida e SPC/Serasa</li><li>Produtos com defeito e vícios</li><li>Indenizações por danos materiais e morais</li></ul></div></div>
+                <div class="card-atuacao" onclick="toggleCard(this)"><div class="card-header"><div class="card-header-content"><i class="fas fa-users icon-principal"></i><h3>Direito de Família & Sucessões</h3></div></div><div class="card-body"><p>Sensibilidade técnica em reestruturações familiares:</p><ul><li>Divórcio consensual e litigioso</li><li>Pensão alimentícia e guarda de menores</li><li>Inventários, partilhas e testamentos</li><li>Planejamento sucessório</li></ul></div></div>
+                <div class="card-atuacao" onclick="toggleCard(this)"><div class="card-header"><div class="card-header-content"><i class="fas fa-heartbeat icon-principal"></i><h3>Direito à Saúde</h3></div></div><div class="card-body"><p>Garantia rápida de tratamentos e medicamentos:</p><ul><li>Liminares contra negativas de planos de saúde</li><li>Fornecimento de remédios de alto custo</li><li>Cobertura de cirurgias emergenciais</li><li>Erro médico e responsabilidade hospitalar</li></ul></div></div>
+                <div class="card-atuacao" onclick="toggleCard(this)"><div class="card-header"><div class="card-header-content"><i class="fas fa-building icon-principal"></i><h3>Direito Empresarial</h3></div></div><div class="card-body"><p>Soluções jurídicas estratégicas para resguardar as operações e o patrimônio da sua empresa:</p><ul><li>Elaboração, análise e auditoria de contratos comerciais</li><li>Governança corporativa e compliance empresarial</li><li>Assessoria jurídica preventiva para tomada de decisões</li><li>Constituição, alteração e dissolução de sociedades</li></ul></div></div>
+                <div class="card-atuacao" onclick="toggleCard(this)"><div class="card-header"><div class="card-header-content"><i class="fas fa-id-card icon-principal"></i><h3>Direito Trabalhista</h3></div></div><div class="card-body"><p>Defesa de direitos e segurança nas relações de trabalho:</p><ul><li>Ações por demissão sem justa causa e reversão de justa causa</li><li>Indenizações por assédio moral, sexual e acidentes de trabalho</li><li>Indenizações por doenças ocupacionais</li><li>Consultoria preventiva e defesa empresarial</li></ul></div></div>
+                <div class="card-atuacao" onclick="toggleCard(this)"><div class="card-header"><div class="card-header-content"><i class="fas fa-user-shield icon-principal"></i><h3>Direito Previdenciário</h3></div></div><div class="card-body"><p>Consultoria estratégica para a garantia de direitos e proteção do seu futuro:</p><ul><li>Planejamento previdenciário</li><li>Análise e pedido de concessão de benefícios (Aposentadorias, Pensões e Auxílios)</li><li>Revisão de benefícios para readequação de valores retroativos</li><li>Atuação em processos administrativos perante o INSS</li></ul></div></div>
+                <div class="card-atuacao" onclick="toggleCard(this)"><div class="card-header"><div class="card-header-content"><i class="fas fa-house-user icon-principal"></i><h3>Direito Imobiliário</h3></div></div><div class="card-body"><p>Segurança jurídica e proteção para o seu patrimônio:</p><ul><li>Contratos de compra, venda e locação comercial ou residencial</li><li>Regularização de imóveis, escrituras, registros e usucapião</li><li>Distrato imobiliário e atraso na entrega de imóveis na planta</li><li>Ações de despejo, cobrança de aluguéis e renovatórias</li></ul></div></div>
+            </div>
+        </section>
+
+        <!-- SERVIÇOS -->
+        <div id="servicos" class="servicos-section">
+            <div class="servicos-container">
+                <div class="section-header" style="margin-bottom: 60px;">
+                    <p>Atuação Prática</p>
+                    <h2>Serviços e Soluções Jurídicas</h2>
+                    <p style="font-size: 13px; color: #888; margin-top: 5px;">Clique em um serviço para ver a descrição detalhada.</p>
+                </div>
+                <div class="grid-servicos">
+                    <div class="servico-box" onclick="toggleServico(this)"><div class="servico-header"><h4>Assessoria Documental</h4><i class="fas fa-plus"></i></div><div class="servico-body"><p>Análise preventiva, conferência e validação minuciosa de contratos, certidões e documentos jurídicos sensíveis.</p></div></div>
+                    <div class="servico-box" onclick="toggleServico(this)"><div class="servico-header"><h4>Processos Judiciais</h4><i class="fas fa-plus"></i></div><div class="servico-body"><p>Condução rigorosa de litígios e ações em todas as comarcas, varas e tribunais com acompanhamento ativo.</p></div></div>
+                    <div class="servico-box" onclick="toggleServico(this)"><div class="servico-header"><h4>Petições, Recursos & Liminares</h4><i class="fas fa-plus"></i></div><div class="servico-body"><p>Elaboração técnica de peças fundamentadas, requerimentos de urgência (liminares) e recursos em instâncias superiores.</p></div></div>
+                    <div class="servico-box" onclick="toggleServico(this)"><div class="servico-header"><h4>Defesas Especializadas</h4><i class="fas fa-plus"></i></div><div class="servico-body"><p>Construção robusta de teses defensivas para resguardar interesses e reverter cenários desfavoráveis.</p></div></div>
+                    <div class="servico-box" onclick="toggleServico(this)"><div class="servico-header"><h4>Acordos Judiciais e Extrajudiciais</h4><i class="fas fa-plus"></i></div><div class="servico-body"><p>Condução estratégica de negociações para soluções consensuais céleres, seguras e vantajosas.</p></div></div>
+                    <div class="servico-box" onclick="toggleServico(this)"><div class="servico-header"><h4>Participação em Audiências</h4><i class="fas fa-plus"></i></div><div class="servico-body"><p>Representação e condução firme de audiências de conciliação, instrução e julgamento com presença ativa.</p></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ESCRITÓRIO -->
+        <div id="escritorio" class="escritorio-unificado-section">
+            <div class="escritorio-unificado-container">
+                <div><img src="dra-eliane.jpg" alt="Dra. Eliane de Freitas" class="foto-dra-deslocada"></div>
+                <div class="escritorio-unificado-texto">
+                    <p style="color: var(--cor-dourado); text-transform: uppercase; font-size: 11px; letter-spacing: 3px; margin-bottom: 10px;">Tradição e Liderança Jurídica</p>
+                    <h2>O Escritório & a Sócia Fundadora</h2>
+                    <p>A Freitas Silqueira Advocacia destaca-se pela sólida relação de confiança com seus clientes e por sua ampla atuação jurídica, com especial ênfase na resolução de litígios complexos, atuação estratégica perante os Tribunais Superiores, rigorosa análise técnico-regulatória e consultoria voltada à orientação de advogados.</p>
+                    <p>À frente da instituição, a Dra. Eliane de Freitas (OAB/SP nº 524145) conduz a prática legal pautada pelo compromisso inegociável com a excelência, zelo processual e dedicação integral, buscando sempre soluções inovadoras que proporcionam ampla segurança jurídica e constroem relacionamentos duradouros.</p>
+                    <p>Nossa atuação diária é firmada na ética, na transparência e no dinamismo, orientada por estratégias consolidadas, atualização contínua e inteligência jurídica direcionada à resolução integral e eficaz de conflitos.</p>
+                    <p>Ademais, a responsabilidade corporativa consolida-se como um pilar essencial de nossa identidade institucional, impulsionando nosso compromisso com o desenvolvimento de uma sociedade mais justa, a valorização da diversidade e a segurança daqueles que depositam sua confiança em nosso trabalho.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOCALIZAÇÃO & INFORMAÇÕES ÚTEIS -->
+        <div id="localizacao" class="info-localizacao-section">
+            <div class="section-header" style="margin-bottom: 40px;">
+                <p>Localização & Contato</p>
+                <h2>Informações Úteis</h2>
+            </div>
+            <div class="localizacao-grid">
+                <div class="localizacao-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Endereço</h3>
+                    <a href="https://www.google.com/maps/place/Freitas+Silqueira+Advocacia" target="_blank" class="endereco-link">
+                        Calçada dos Mirtilos, 23, Centro Comercial<br>Alphaville<br>Alphaville, Barueri - SP, 06453-019<br>
+                        <span style="color: var(--cor-dourado); display: block; margin-top: 8px;">Atuação remota em todas as regiões.</span>
+                    </a>
+                </div>
+                <div class="localizacao-card">
+                    <i class="far fa-clock"></i>
+                    <h3>Horário de Atendimento</h3>
+                    <p>Segunda a Sexta-feira<br>09:00 às 18:00<br>
+                    <span style="color: var(--cor-dourado); display: block; margin-top: 8px;">Atendimento mediante agendamento prévio.</span>
+                    <p>(Presencial ou Online).</p>
+                </div>
+                <div class="localizacao-card">
+                    <i class="fas fa-phone-alt"></i>
+                    <h3>Canais de Contato</h3>
+                    <p>WhatsApp Comercial: <a href="https://wa.me/5511915270860" target="_blank" style="color: var(--cor-dourado); text-decoration: none;">(11) 91527-0860</a><br>
+                    Instagram: <a href="https://www.instagram.com/freitassilqueiraadv" target="_blank" style="color: var(--cor-dourado); text-decoration: none;">@freitassilqueiraadv</a></p>
+                </div>
+            </div>
+            <div class="bloco-cta-inferior">
+                <h3>Precisa de Orientação Jurídica?</h3>
+                <p>Converse diretamente com nossa equipe e agende sua consulta especializada, onde quer que você esteja.</p>
+                <a href="https://wa.me/5511915270860?text=Olá,%20estou%20vindo%20do%20site%20Freitas%20Silqueira%20e%20gostaria%20de%20agendar%20um%20atendimento%20jurídico." target="_blank" class="btn-gold"><i class="fab fa-whatsapp"></i> Agendar Atendimento pelo WhatsApp</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🗂️ TELA DEDICADA DO BLOG -->
+    <div id="secaoBlogCompleta">
+        <div class="blog-container-principal">
+            
+            <!-- LISTA DOS CARDS DO BLOG -->
+            <div id="visaoListaBlog">
+                <div class="section-header" style="margin-top: 10px; margin-bottom: 30px;">
+                    <p>Conteúdos & Publicações</p>
+                    <h2>Blog Jurídico</h2>
+                </div>
+
+                <div class="blog-filter-bar">
+                    <span class="filter-title">Áreas:</span>
+                    <button class="filter-btn active" onclick="filtrarBlog('Todos', this)">Todos</button>
+                    <button class="filter-btn" onclick="filtrarBlog('Cível', this)">Cível</button>
+                    <button class="filter-btn" onclick="filtrarBlog('Consumidor', this)">Consumidor</button>
+                    <button class="filter-btn" onclick="filtrarBlog('Família', this)">Família</button>
+                    <button class="filter-btn" onclick="filtrarBlog('Saúde', this)">Saúde</button>
+                    <button class="filter-btn" onclick="filtrarBlog('Empresarial', this)">Empresarial</button>
+                    <button class="filter-btn" onclick="filtrarBlog('Trabalhista', this)">Trabalhista</button>
+                    <button class="filter-btn" onclick="filtrarBlog('Previdenciário', this)">Previdenciário</button>
+                    <button class="filter-btn" onclick="filtrarBlog('Imobiliário', this)">Imobiliário</button>
+                </div>
+
+                <div class="blog-grid-completo" id="gridPostsBlog"></div>
+            </div>
+
+            <!-- 📄 LEITOR COMPLETO DO ARTIGO -->
+            <div id="leitorArtigoCompleto">
+                <a onclick="fecharLeitorArtigo()" class="btn-voltar-site"><i class="fas fa-arrow-left"></i> &nbsp; Voltar para a Lista de Artigos</a>
+                
+                <div class="artigo-meta">
+                    <span id="leitorArea">Cível</span>
+                    <span id="leitorData">06/11/2026</span>
+                </div>
+                <h1 id="leitorTitulo" class="artigo-titulo-full">Título do Artigo</h1>
+                
+                <div class="artigo-banner-container">
+                    <img id="leitorBanner" src="" alt="Capa do Artigo" class="artigo-banner-principal">
+                </div>
+                
+                <div id="leitorConteudo" class="artigo-corpo-texto"></div>
+            </div>
+
+            <!-- ✉️ ESTRUTURA DUPLA CONTATO ABA BLOG -->
+            <div class="secao-contato-dupla" style="margin-top: 70px; background: transparent; border-top: 1px solid rgba(197, 160, 89, 0.25); padding: 60px 0;">
+                <div class="container-contato-duplo">
+                    
+                    <div class="contato-info-lado">
+                        <span class="super-tag-contato">Contato</span>
+                        <h2>Precisa de Orientação Jurídica?</h2>
+                        <p class="subtitulo-frase">Converse diretamente com nossa equipe e agende sua consulta especializada.</p>
+                        <p class="desc-chamada">Atendimento online em todo o Brasil ou presencial em Alphaville, Barueri/SP.</p>
+
+                        <div class="lista-canais-diretos">
+                            <div class="canal-item">
+                                <div class="icon-circle"><i class="fas fa-phone-alt"></i></div>
+                                <a href="https://wa.me/5511915270860?text=Olá,%20gostaria%20de%20agendar%20um%20atendimento%20jurídico." target="_blank">(11) 91527-0860</a>
+                            </div>
+                            <div class="canal-item">
+                                <div class="icon-circle"><i class="far fa-envelope"></i></div>
+                                <a href="mailto:contato.freitassilqueira@gmail.com">contato.freitassilqueira@gmail.com</a>
+                            </div>
+                            <div class="canal-item">
+                                <div class="icon-circle"><i class="fab fa-instagram"></i></div>
+                                <a href="https://www.instagram.com/freitassilqueiraadv" target="_blank">@freitassilqueiraadv</a>
+                            </div>
+                        </div>
+
+                        <div class="bloco-unidades-locais">
+                            <h4>Sede Oficial</h4>
+                            <div class="unidade-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <strong>Alphaville · Barueri/SP</strong>
+                                    <p>Calçada dos Mirtilos, 23, Centro Comercial Alphaville — CEP 06453-019</p>
+                                </div>
+                            </div>
+
+                            <!-- MAPA COM PIN DOURADO -->
+                            <a href="https://www.google.com/maps/place/Freitas+Silqueira+Advocacia" target="_blank" class="mapa-link-wrapper" title="Abrir Freitas Silqueira Advocacia no Google Maps">
+                                <i class="fas fa-map-marker-alt pin-dourado-customizado"></i>
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3658.077271816551!2d-46.8539213!3d-23.4965351!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cf030ddcc2a31d%3A0x90c7c6920cc1aece!2sFreitas+Silqueira+Advocacia!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy"></iframe>
+                                <div class="mapa-overlay-texto"><i class="fas fa-map-marked-alt"></i> Ver Freitas Silqueira Advocacia no Google Maps</div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- CARD FORMULÁRIO COM MÁSCARA E CAMPOS DE CIDADE/ESTADO -->
+                    <div class="card-formulario-claro">
+                        <h3>Solicite um contato</h3>
+                        <form id="formBlogWhats" onsubmit="enviarMensagemBlogWhatsApp(event)">
+                            <div class="campo-form-grupo">
+                                <label for="blogNome">Nome Completo *</label>
+                                <input type="text" id="blogNome" placeholder="Seu nome completo" required>
+                            </div>
+
+                            <div class="campo-form-grupo">
+                                <label for="blogTelefone">Telefone / WhatsApp *</label>
+                                <input type="text" id="blogTelefone" placeholder="(11) 90000-0000" maxlength="15" oninput="aplicarMascaraTelefone(this)" required>
+                            </div>
+
+                            <div class="form-row-duplo">
+                                <div class="campo-form-grupo">
+                                    <label for="blogCidade">Cidade *</label>
+                                    <input type="text" id="blogCidade" placeholder="Ex.: Barueri" required>
+                                </div>
+                                <div class="campo-form-grupo">
+                                    <label for="blogEstado">Estado (UF) *</label>
+                                    <select id="blogEstado" required>
+                                        <option value="" disabled selected>UF</option>
+                                        <option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option><option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option><option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option><option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option><option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="campo-form-grupo">
+                                <label for="blogAssunto">Assunto / Área *</label>
+                                <select id="blogAssunto" required>
+                                    <option value="" disabled selected>Ex.: Selecione o assunto...</option>
+                                    <option value="Direito Cível & Contratual">Direito Cível & Contratual</option>
+                                    <option value="Direito do Consumidor">Direito do Consumidor</option>
+                                    <option value="Direito de Família & Sucessões">Direito de Família & Sucessões</option>
+                                    <option value="Direito à Saúde">Direito à Saúde</option>
+                                    <option value="Direito Empresarial">Direito Empresarial</option>
+                                    <option value="Direito Trabalhista">Direito Trabalhista</option>
+                                    <option value="Direito Previdenciário">Direito Previdenciário</option>
+                                    <option value="Direito Imobiliário">Direito Imobiliário</option>
+                                </select>
+                            </div>
+
+                            <div class="campo-form-grupo">
+                                <label for="blogMensagem">Mensagem *</label>
+                                <textarea id="blogMensagem" rows="4" placeholder="Descreva brevemente sua necessidade" required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-enviar-wpp-card">
+                                <i class="fab fa-whatsapp" style="font-size: 16px;"></i> Enviar Mensagem via WhatsApp
+                            </button>
+                            <p class="nota-confidencialidade">Suas informações são tratadas com total confidencialidade.</p>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 📸 SEÇÃO DO INSTAGRAM -->
+            <div class="secao-redes-sociais-blog">
+                <i class="fab fa-instagram" style="font-size: 32px; color: var(--cor-dourado); margin-bottom: 10px;"></i>
+                <br>
+                <a href="https://www.instagram.com/freitassilqueiraadv" target="_blank" class="titulo-instagram-link">
+                    <h3>Siga-nos no Instagram</h3>
+                </a>
+                <p>Acompanhe nossas redes sociais informações jurídicas e atualizações do nosso escritório.</p>
+                <div class="grid-posts-instagram" id="gridPostsInstagram"></div>
+            </div>
+
+            <!-- 💬 CAMPO BOTÃO WHATSAPP FALE CONOSCO -->
+            <div class="campo-wpp-fale-conosco">
+                <h4>Precisa de Atendimento Jurídico?</h4>
+                <p>Fale diretamente com o nosso escritório através do WhatsApp e receba suporte especializado.</p>
+                <a href="https://wa.me/5511915270860?text=Olá,%20estou%20vindo%20do%20blog%20e%20gostaria%20de%20falar%20com%20o%20escritório." target="_blank" class="btn-gold">
+                    <i class="fab fa-whatsapp"></i> Fale Conosco
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 📌 RODAPÉ FINAL -->
+    <footer>
+        <p>&copy; Freitas Silqueira Advocacia e Consultoria Jurídica. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- BOTÃO FLUTUANTE WHATSAPP (DIREITA) -->
+    <a href="https://wa.me/5511915270860?text=Olá,%20estou%20vindo%20do%20site%20Freitas%20Silqueira%20e%20gostaria%20de%20agendar%20um%20atendimento%20jurídico." target="_blank" class="btn-wpp-float">
+        <i class="fab fa-whatsapp"></i>
+        <span>Falar no WhatsApp</span>
+    </a>
+
+    <!-- ⬆️ BOTÃO VOLTAR AO TOPO (ESQUERDA) -->
+    <button id="btnVoltarTopo" class="btn-topo-float" onclick="voltarAoTopo()" title="Voltar ao topo">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- SCRIPTS DE CONTROLE COM SLUGS LIMPOS -->
+    <script>
+        const rotasSEO = {
+            '/': {
+                secao: 'inicio',
+                titulo: 'Freitas Silqueira | Advocacia e Consultoria Jurídica',
+                descricao: 'Soluções jurídicas especializadas em múltiplas frentes do Direito, unindo atendimento personalizado, rigor técnico, ética e atuação digital em todo o Brasil.'
+            },
+            '/areas': {
+                secao: 'atuacao',
+                titulo: 'Áreas de Atuação Jurídica | Freitas Silqueira Advocacia',
+                descricao: 'Atuação especializada em Direito Cível, Consumidor, Família, Saúde, Empresarial, Trabalhista, Previdenciário e Imobiliário.'
+            },
+            '/servicos': {
+                secao: 'servicos',
+                titulo: 'Serviços e Soluções Jurídicas | Freitas Silqueira Advocacia',
+                descricao: 'Assessoria documental, processos judiciais, petições, recursos, liminares, acordos e representação em audiências.'
+            },
+            '/escritorio': {
+                secao: 'escritorio',
+                titulo: 'O Escritório & Sócia Fundadora | Freitas Silqueira Advocacia',
+                descricao: 'Conheça a história da Freitas Silqueira Advocacia e a atuação da Dra. Eliane de Freitas (OAB/SP 524145).'
+            },
+            '/blog': {
+                secao: 'blog',
+                titulo: 'Blog Jurídico | Freitas Silqueira Advocacia',
+                descricao: 'Artigos, notícias e orientações jurídicas atualizadas sobre seus direitos.'
+            },
+            '/contato': {
+                secao: 'localizacao',
+                titulo: 'Contato e Localização | Freitas Silqueira Advocacia',
+                descricao: 'Entre em contato pelo WhatsApp (11) 91527-0860 ou visite nosso escritório em Alphaville, Barueri - SP.'
+            }
+        };
+
+        function criarSlug(texto) {
+            return texto.toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/&/g, 'e')
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+
+        function atualizarMetaTagsSEO(rota) {
+            const config = rotasSEO[rota] || rotasSEO['/'];
+            document.title = config.titulo;
+
+            let metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc) metaDesc.setAttribute('content', config.descricao);
+
+            let canonical = document.querySelector('link[rel="canonical"]');
+            if (canonical) canonical.setAttribute('href', 'https://freitassilqueira.com.br' + (rota === '/' ? '/' : rota));
+        }
+
+        function navegarRota(event, rota, destino, adicionarHistorico = true) {
+            if (event) event.preventDefault();
+
+            if (adicionarHistorico && window.location.pathname !== rota) {
+                window.history.pushState({ rota, destino }, '', rota);
+            }
+
+            atualizarMetaTagsSEO(rota);
+
+            if (destino === 'blog') {
+                abrirSecaoBlog(false);
+            } else {
+                mostrarSitePrincipal(destino, false);
+            }
+        }
+
+        function toggleCard(card) {
+            card.classList.toggle('ativo');
+            const tituloEl = card.querySelector('h3');
+            if (tituloEl) {
+                const nomeArea = tituloEl.innerText.trim();
+                const slug = criarSlug(nomeArea);
+                const novaRota = card.classList.contains('ativo') ? `/areas/${slug}` : '/areas';
+                window.history.pushState({ rota: novaRota, destino: 'atuacao' }, '', novaRota);
+                document.title = card.classList.contains('ativo')
+                    ? `${nomeArea} | Freitas Silqueira Advocacia`
+                    : rotasSEO['/areas'].titulo;
+                let canonical = document.querySelector('link[rel="canonical"]');
+                if (canonical) {
+                    canonical.setAttribute('href', card.classList.contains('ativo')
+                        ? `https://freitassilqueira.com.br/areas/${slug}`
+                        : 'https://freitassilqueira.com.br/areas');
+                }
+            }
+        }
+
+        function toggleServico(box) {
+            document.querySelectorAll('.servico-box').forEach(item => {
+                if (item !== box && item.classList.contains('ativo')) {
+                    item.classList.remove('ativo');
+                    const ic = item.querySelector('.servico-header i');
+                    if (ic) { ic.classList.remove('fa-minus'); ic.classList.add('fa-plus'); }
+                }
+            });
+
+            box.classList.toggle('ativo');
+            const icon = box.querySelector('.servico-header i');
+            const tituloEl = box.querySelector('.servico-header h4');
+            const nomeServico = tituloEl ? tituloEl.innerText.trim() : '';
+
+            if (box.classList.contains('ativo')) {
+                icon.classList.remove('fa-plus');
+                icon.classList.add('fa-minus');
+
+                if (nomeServico) {
+                    const slug = criarSlug(nomeServico);
+                    const novaRota = `/servicos/${slug}`;
+                    window.history.pushState({ rota: novaRota, destino: 'servicos' }, '', novaRota);
+                    document.title = `${nomeServico} | Freitas Silqueira Advocacia`;
+                    let canonical = document.querySelector('link[rel="canonical"]');
+                    if (canonical) canonical.setAttribute('href', `https://freitassilqueira.com.br/servicos/${slug}`);
+                }
+            } else {
+                icon.classList.remove('fa-minus');
+                icon.classList.add('fa-plus');
+
+                window.history.pushState({ rota: '/servicos', destino: 'servicos' }, '', '/servicos');
+                atualizarMetaTagsSEO('/servicos');
+            }
+        }
+
+        function abrirSecaoBlog(atualizarUrl = true) {
+            if (atualizarUrl && window.location.pathname !== '/blog') {
+                window.history.pushState({ rota: '/blog', destino: 'blog' }, '', '/blog');
+                atualizarMetaTagsSEO('/blog');
+            }
+            document.getElementById('conteudoSitePrincipal').style.display = 'none';
+            document.getElementById('secaoBlogCompleta').style.display = 'block';
+            fecharLeitorArtigo();
+            window.scrollTo(0, 0);
+            carregarPostsBlog('Todos');
+            carregarPostsInstagram();
+        }
+
+        function mostrarSitePrincipal(ancoraId, atualizarUrl = true) {
+            document.getElementById('secaoBlogCompleta').style.display = 'none';
+            document.getElementById('conteudoSitePrincipal').style.display = 'block';
+
+            if (ancoraId) {
+                const el = document.getElementById(ancoraId);
+                if (el) {
+                    setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 50);
+                }
+            } else {
+                window.scrollTo(0, 0);
+            }
+        }
+
+        window.addEventListener('popstate', function() {
+            processarRotaAtual();
+        });
+
+        function processarRotaAtual() {
+            let rawPath = decodeURIComponent(window.location.pathname);
+            if (rawPath.length > 1 && rawPath.endsWith('/')) {
+                rawPath = rawPath.slice(0, -1);
+            }
+
+            const pathLower = rawPath.toLowerCase()
+                .replace('serviços', 'servicos')
+                .replace('escritório', 'escritorio')
+                .replace('áreas', 'areas');
+
+            if (pathLower.startsWith('/servicos/')) {
+                const subItemSlug = rawPath.split('/').slice(2).join('/').trim().toLowerCase();
+                atualizarMetaTagsSEO('/servicos');
+                mostrarSitePrincipal('servicos', false);
+
+                document.querySelectorAll('.servico-box').forEach(box => {
+                    const h4 = box.querySelector('.servico-header h4');
+                    if (h4) {
+                        const tituloBox = h4.innerText.trim();
+                        if (criarSlug(tituloBox) === subItemSlug || tituloBox.toLowerCase() === subItemSlug) {
+                            box.classList.add('ativo');
+                            const icon = box.querySelector('.servico-header i');
+                            if (icon) { icon.classList.remove('fa-plus'); icon.classList.add('fa-minus'); }
+                            document.title = `${tituloBox} | Freitas Silqueira Advocacia`;
+                        }
+                    }
+                });
+                return;
+            }
+
+            if (pathLower.startsWith('/areas/')) {
+                const subAreaSlug = rawPath.split('/').slice(2).join('/').trim().toLowerCase();
+                atualizarMetaTagsSEO('/areas');
+                mostrarSitePrincipal('atuacao', false);
+
+                document.querySelectorAll('.card-atuacao').forEach(card => {
+                    const h3 = card.querySelector('h3');
+                    if (h3) {
+                        const tituloCard = h3.innerText.trim();
+                        if (criarSlug(tituloCard) === subAreaSlug || tituloCard.toLowerCase() === subAreaSlug) {
+                            card.classList.add('ativo');
+                            document.title = `${tituloCard} | Freitas Silqueira Advocacia`;
+                        }
+                    }
+                });
+                return;
+            }
+
+            const config = rotasSEO[pathLower];
+            if (config) {
+                atualizarMetaTagsSEO(pathLower);
+                if (config.secao === 'blog') {
+                    abrirSecaoBlog(false);
+                } else {
+                    mostrarSitePrincipal(config.secao, false);
+                }
+            } else {
+                atualizarMetaTagsSEO('/');
+                mostrarSitePrincipal('inicio', false);
+            }
+        }
+
+        function filtrarBlog(categoria, elementoBotao) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            elementoBotao.classList.add('active');
+            carregarPostsBlog(categoria);
+        }
+
+        function aplicarMascaraTelefone(input) {
+            let valor = input.value.replace(/\D/g, ''); 
+            if (valor.length > 11) valor = valor.slice(0, 11); 
+
+            if (valor.length > 10) {
+                valor = valor.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+            } else if (valor.length > 5) {
+                valor = valor.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+            } else if (valor.length > 2) {
+                valor = valor.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+            } else if (valor.length > 0) {
+                valor = valor.replace(/^(\d*)/, '($1');
+            }
+            input.value = valor;
+        }
+
+        window.addEventListener('scroll', function() {
+            const btnTopo = document.getElementById('btnVoltarTopo');
+            if (window.scrollY > 300) {
+                btnTopo.classList.add('visivel');
+            } else {
+                btnTopo.classList.remove('visivel');
+            }
+        });
+
+        function voltarAoTopo() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+    async function carregarPostsBlog(filtroArea) {
+    const container = document.getElementById('gridPostsBlog');
+    if (!container) return;
+
+    try {
+        const resposta = await fetch('dados.json');
+        const dados = await resposta.json();
+        const posts = dados.blog || [];
+        
+        const publicados = posts.filter(p => p.status === 'Publicado');
+        const postsFiltrados = publicados.filter(p => filtroArea === 'Todos' || p.area === filtroArea);
+
+    if (postsFiltrados.length === 0) {
+        container.innerHTML = '<p style="color: #777; text-align: center; grid-column: 1 / -1; padding: 40px;">Nenhum artigo publicado nesta área no momento.</p>';
+        return;
+    }
+
+    let html = '';
+    postsFiltrados.forEach((p, index) => {
+        const imgHtml = p.imagem ? `<div class="blog-card-img"><img src="${p.imagem}" alt="${p.titulo}"></div>` : '';
+        html += `
+            <div class="blog-card-item" onclick="abrirArtigoCompleto(${index})">
+                ${imgHtml}
+                <div class="blog-card-content">
+                    <div>
+                        <span class="tag-area">${p.area || 'Geral'}</span>
+                        <span class="data">${p.data || ''}</span>
+                        <h3>${p.titulo}</h3>
+                        <p>${p.resumo || ''}</p>
+                    </div>
+                    <span class="btn-saiba-mais-card">Saiba mais / Continue lendo <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+    } catch (erro) {
+        container.innerHTML = '<p style="color: #777; text-align: center; grid-column: 1 / -1; padding: 40px;">Nenhum artigo publicado nesta área no momento.</p>';
+    }
+}
+
+    async function carregarPostsInstagram() {
+            const containerInsta = document.getElementById('gridPostsInstagram');
+            if (!containerInsta) return;
+
+            try {
+                // Tenta buscar do dados.json unificado ou do localStorage com fallback seguro
+                let instaPosts = [];
+                try {
+                    const resposta = await fetch('dados.json?v=' + new Date().getTime());
+                    const dados = await resposta.json();
+                    instaPosts = dados.instagram || [];
+                } catch(e) {
+                    instaPosts = JSON.parse(localStorage.getItem('fs_insta_ativos') || '[]');
+                }
+
+                if (instaPosts.length === 0) {
+                    containerInsta.innerHTML = '<p style="color: #777; font-size: 13px; text-align: center; grid-column: 1 / -1;">Nenhum card do Instagram cadastrado no momento.</p>';
+                    return;
+                }
+
+                let htmlInsta = '';
+                instaPosts.slice(0, 3).forEach(item => {
+                    htmlInsta += `
+                        <a href="${item.link}" target="_blank" class="card-insta-item" title="Clique para abrir no Instagram">
+                            <img src="${item.imagem}" alt="Post Instagram" onerror="this.src='https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80'">
+                        </a>
+                    `;
+                });
+
+                containerInsta.innerHTML = htmlInsta;
+            } catch (erro) {
+                containerInsta.innerHTML = '<p style="color: #777; font-size: 13px; text-align: center; grid-column: 1 / -1;">Nenhum card do Instagram cadastrado no momento.</p>';
+            }
+        }
+
+        function abrirArtigoCompleto(index) {
+            const posts = JSON.parse(localStorage.getItem('fs_blog_posts') || localStorage.getItem('blog_posts_fs') || '[]');
+            const publicados = posts.filter(p => p.status === 'Publicado');
+            const p = publicados[index];
+            if (!p) return;
+
+            document.getElementById('leitorArea').innerText = p.area ? p.area.toUpperCase() : 'GERAL';
+            document.getElementById('leitorData').innerText = (p.data || '') + '  —  ';
+            document.getElementById('leitorTitulo').innerText = p.titulo || '';
+            document.getElementById('leitorConteudo').innerText = p.conteudo || p.resumo;
+
+            const banner = document.getElementById('leitorBanner');
+            const containerBanner = banner.parentElement;
+
+            if (p.imagem) {
+                banner.src = p.imagem;
+                containerBanner.style.display = 'flex';
+            } else {
+                containerBanner.style.display = 'none';
+            }
+
+            document.getElementById('visaoListaBlog').style.display = 'none';
+            document.getElementById('leitorArtigoCompleto').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function fecharLeitorArtigo() {
+            document.getElementById('leitorArtigoCompleto').style.display = 'none';
+            document.getElementById('visaoListaBlog').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function enviarMensagemBlogWhatsApp(e) {
+            e.preventDefault();
+            const nome = document.getElementById('blogNome').value.trim();
+            const tel = document.getElementById('blogTelefone').value.trim();
+            const cidade = document.getElementById('blogCidade').value.trim();
+            const estado = document.getElementById('blogEstado').value;
+            const assunto = document.getElementById('blogAssunto').value;
+            const msg = document.getElementById('blogMensagem').value.trim();
+
+            if (!nome || !tel || !cidade || !estado || !assunto || !msg) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+
+            const apenasNumerosTel = tel.replace(/\D/g, '');
+            if (apenasNumerosTel.length < 10) {
+                alert('Por favor, insira um número de telefone/WhatsApp válido.');
+                return;
+            }
+
+            const textoFormatado = `*Solicitação de Contato via Blog - Freitas Silqueira Advocacia*\n\n` +
+                `*Nome:* ${nome}\n` +
+                `*Telefone:* ${tel}\n` +
+                `*Localização:* ${cidade} - ${estado}\n` +
+                `*Área:* ${assunto}\n\n` +
+                `*Mensagem:* ${msg}`;
+
+            const urlWpp = `https://wa.me/5511915270860?text=${encodeURIComponent(textoFormatado)}`;
+            window.open(urlWpp, '_blank');
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            carregarPostsInstagram();
+            processarRotaAtual();
+        });
+    </script>
+</body>
+</html>

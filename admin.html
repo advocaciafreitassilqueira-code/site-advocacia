@@ -1,340 +1,648 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Administrativo | Freitas Silqueira Advocacia</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- FontAwesome para Ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg-preto: #0c0c0c;
-            --bg-grafite: #141414;
-            --bg-grafite-claro: #1c1c1c;
-            --cor-dourado: #C5A059;
-            --cor-dourado-hover: #d4af6a;
-            --cor-texto: #cccccc;
-            --cor-branco: #ffffff;
-            --cor-borda: #2a2a2a;
-            --cor-sucesso: #27ae60;
-            --cor-erro: #e74c3c;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Administrativo | Freitas Silqueira Advocacia</title>
+  <style>
+    :root {
+      --bg-dark: #111214;
+      --bg-card: #1a1c20;
+      --bg-input: #23262b;
+      --gold: #c9a45c;
+      --gold-hover: #dfbc74;
+      --text-main: #f2f2f2;
+      --text-muted: #9da3ae;
+      --border: #2e3239;
+      --danger: #d9534f;
+    }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Montserrat', sans-serif; background-color: var(--bg-preto); color: var(--cor-texto); line-height: 1.6; }
-        h1, h2, h3, h4 { font-family: 'Cinzel', serif; color: var(--cor-branco); }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
 
-        /* TELA DE LOGIN */
-        #loginScreen {
-            display: flex; justify-content: center; align-items: center; height: 100vh;
-            background: linear-gradient(rgba(12, 12, 12, 0.85), rgba(12, 12, 12, 0.95)), url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
-        }
-        .login-card {
-            background-color: var(--bg-grafite); border: 1px solid var(--cor-dourado); padding: 40px;
-            width: 100%; max-width: 400px; border-radius: 4px; box-shadow: 0 15px 35px rgba(0,0,0,0.8); text-align: center;
-        }
-        .login-card h2 { margin-bottom: 25px; font-size: 22px; color: var(--cor-branco); }
-        .form-group { margin-bottom: 20px; text-align: left; }
-        .form-group label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--cor-dourado); margin-bottom: 8px; }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%; background-color: var(--bg-preto); border: 1px solid var(--cor-borda); padding: 12px;
-            color: var(--cor-branco); font-family: 'Montserrat', sans-serif; font-size: 13px; border-radius: 2px; outline: none;
-        }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--cor-dourado); }
-        .btn-admin {
-            width: 100%; background-color: var(--cor-dourado); color: var(--bg-preto); border: none;
-            padding: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: background 0.3s;
-        }
-        .btn-admin:hover { background-color: var(--cor-dourado-hover); }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
 
-        /* PAINEL PRINCIPAL */
-        #adminPanel { display: none; min-height: 100vh; padding: 40px; max-width: 1200px; margin: 0 auto; }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--cor-borda); padding-bottom: 20px; margin-bottom: 30px; }
-        .admin-header h1 { font-size: 24px; color: var(--cor-dourado); }
-        .btn-sair { background: transparent; border: 1px solid var(--cor-erro); color: var(--cor-erro); padding: 8px 16px; cursor: pointer; font-size: 12px; text-transform: uppercase; transition: all 0.3s; }
-        .btn-sair:hover { background: var(--cor-erro); color: #fff; }
+    /* Tela de Login */
+    #login-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
 
-        .admin-section { background-color: var(--bg-grafite); border: 1px solid var(--cor-borda); padding: 30px; border-radius: 4px; margin-bottom: 30px; }
-        .admin-section h3 { margin-bottom: 20px; font-size: 18px; border-bottom: 1px solid var(--cor-borda); padding-bottom: 10px; color: var(--cor-branco); }
-        
-        .lista-gerenciamento { margin-top: 20px; display: grid; gap: 15px; }
-        .item-gerenciado { background-color: var(--bg-preto); border: 1px solid var(--cor-borda); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 2px; }
-        .item-gerenciado h4 { font-size: 15px; color: var(--cor-branco); font-family: 'Montserrat', sans-serif; font-weight: 600; }
-        .item-gerenciado span { font-size: 12px; color: #888; }
-        .acoes-item { display: flex; gap: 10px; }
-        .btn-acao { background: transparent; border: 1px solid var(--cor-borda); color: var(--cor-texto); padding: 6px 12px; cursor: pointer; font-size: 11px; transition: all 0.3s; }
-        .btn-acao.deletar:hover { border-color: var(--cor-erro); color: var(--cor-erro); }
-        .btn-acao.editar:hover { border-color: var(--cor-dourado); color: var(--cor-dourado); }
-    </style>
+    .login-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
+      padding: 40px 32px;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    }
+
+    .login-box img {
+      max-height: 60px;
+      margin-bottom: 16px;
+    }
+
+    .login-box h2 {
+      color: var(--gold);
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .login-box p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+    }
+
+    /* Estrutura do Painel */
+    #admin-panel {
+      display: none;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand img { height: 42px; }
+    .brand h1 { font-size: 1.25rem; color: var(--gold); font-weight: 600; }
+
+    .header-actions { display: flex; gap: 10px; }
+
+    .grid-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+    }
+
+    @media (max-width: 860px) {
+      .grid-layout { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    .card h3 {
+      color: var(--gold);
+      font-size: 1.1rem;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-group { margin-bottom: 16px; }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="date"],
+    input[type="url"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px 14px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--gold);
+    }
+
+    textarea { resize: vertical; min-height: 90px; }
+
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 11px 18px;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #111;
+      width: 100%;
+    }
+
+    .btn-gold:hover { background: var(--gold-hover); }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 14px;
+      font-size: 0.85rem;
+    }
+
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    .btn-danger {
+      background: rgba(217, 83, 79, 0.15);
+      color: #ff7b77;
+      border: 1px solid rgba(217, 83, 79, 0.3);
+      padding: 6px 10px;
+      font-size: 0.8rem;
+    }
+
+    .btn-danger:hover { background: var(--danger); color: #fff; }
+
+    .btn-edit {
+      background: rgba(201, 164, 92, 0.15);
+      color: var(--gold);
+      border: 1px solid rgba(201, 164, 92, 0.3);
+      padding: 6px 10px;
+      font-size: 0.8rem;
+    }
+
+    .btn-edit:hover { background: var(--gold); color: #111; }
+
+    .preview-box {
+      margin-top: 8px;
+      max-height: 150px;
+      border-radius: 6px;
+      overflow: hidden;
+      display: none;
+      border: 1px solid var(--border);
+    }
+
+    .preview-box img {
+      width: 100%;
+      max-height: 150px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Lista de Postagens */
+    .post-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 680px;
+      overflow-y: auto;
+    }
+
+    .post-item {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .post-info h4 {
+      font-size: 0.98rem;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-right: 6px;
+      background: rgba(201, 164, 92, 0.18);
+      color: var(--gold);
+    }
+
+    .post-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .status-msg {
+      margin-top: 12px;
+      font-size: 0.88rem;
+      text-align: center;
+      min-height: 20px;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- TELA DE LOGIN DO ADMIN -->
-    <div id="loginScreen">
-        <div class="login-card">
-            <h2>Área Administrativa</h2>
-            <form onsubmit="fazerLogin(event)">
-                <div class="form-group">
-                    <label for="adminUser">Usuário</label>
-                    <input type="text" id="adminUser" required placeholder="Digite o usuário">
-                </div>
-                <div class="form-group">
-                    <label for="adminSenha">Senha</label>
-                    <input type="password" id="adminSenha" required placeholder="Digite a senha">
-                </div>
-                <button type="submit" class="btn-admin">Entrar no Painel</button>
-            </form>
+  <!-- TELA DE LOGIN -->
+  <div id="login-screen">
+    <div class="login-box">
+      <img src="logo.png" alt="Freitas Silqueira" onerror="this.style.display='none'">
+      <h2>Acesso Restrito</h2>
+      <p>Freitas Silqueira Advocacia</p>
+      <form id="login-form">
+        <div class="form-group">
+          <input type="password" id="senha-input" placeholder="Digite a senha de administrador" required>
         </div>
+        <button type="submit" class="btn btn-gold">Entrar no Painel</button>
+        <div id="login-erro" class="status-msg" style="color: #ff7b77;"></div>
+      </form>
     </div>
+  </div>
 
-    <!-- PAINEL DE GESTÃO -->
-    <div id="adminPanel">
-        <div class="admin-header">
-            <h1>Painel de Controle · Freitas Silqueira</h1>
-            <button onclick="fazerLogout()" class="btn-sair">Sair do Painel</button>
+  <!-- PAINEL PRINCIPAL -->
+  <div id="admin-panel">
+    <header>
+      <div class="brand">
+        <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
+        <h1>Gestão de Conteúdo | Freitas Silqueira</h1>
+      </div>
+      <div class="header-actions">
+        <a href="index.html" target="_blank" class="btn btn-outline">Ver Site</a>
+        <button onclick="sair()" class="btn btn-outline">Sair</button>
+      </div>
+    </header>
+
+    <div class="grid-layout">
+      <!-- FORMULÁRIO DE PUBLICAÇÃO -->
+      <div class="card">
+        <h3 id="form-titulo">Nova Publicação</h3>
+        <form id="post-form">
+          <input type="hidden" id="post-id">
+          <input type="hidden" id="imagem-base64">
+
+          <div class="row-2">
+            <div class="form-group">
+              <label>Tipo de Conteúdo</label>
+              <select id="tipo" onchange="alternarCampos()">
+                <option value="artigo">Artigo Jurídico (Blog)</option>
+                <option value="instagram">Destaque Instagram</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Data da Publicação</label>
+              <input type="date" id="data" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Título da Publicação</label>
+            <input type="text" id="titulo" placeholder="Ex: Direitos do Paciente na Negativa de Cirurgia" required>
+          </div>
+
+          <div class="row-2">
+            <div class="form-group">
+              <label>Área de Atuação</label>
+              <select id="area">
+                <option value="Direito da Saúde">Direito da Saúde</option>
+                <option value="Direito Criminal / Habeas Corpus">Direito Criminal / Habeas Corpus</option>
+                <option value="Direito Previdenciário">Direito Previdenciário</option>
+                <option value="Direito Civil e Família">Direito Civil e Família</option>
+                <option value="Informativo Institucional">Informativo Institucional</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Status</label>
+              <select id="status">
+                <option value="publicado">Publicado</option>
+                <option value="rascunho">Rascunho (Oculto)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Imagem de Capa (Galeria ou Computador)</label>
+            <input type="file" id="arquivo-imagem" accept="image/*" onchange="processarImagem(event)">
+            <div class="preview-box" id="preview-box">
+              <img id="preview-img" src="" alt="Prévia">
+            </div>
+          </div>
+
+          <div class="form-group" id="grupo-link" style="display: none;">
+            <label>Link da Postagem no Instagram</label>
+            <input type="url" id="link" placeholder="https://www.instagram.com/p/...">
+          </div>
+
+          <div class="form-group">
+            <label>Resumo Curto (Aparece no card do site)</label>
+            <textarea id="resumo" rows="2" placeholder="Breve descrição informativa..." required></textarea>
+          </div>
+
+          <div class="form-group" id="grupo-conteudo">
+            <label>Texto Completo do Artigo</label>
+            <textarea id="conteudo" rows="6" placeholder="Escreva o conteúdo informativo do artigo aqui..."></textarea>
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button type="submit" class="btn btn-gold" id="btn-salvar">Salvar Publicação</button>
+            <button type="button" class="btn btn-outline" id="btn-cancelar" style="display: none;" onclick="limparFormulario()">Cancelar</button>
+          </div>
+          <div id="form-status" class="status-msg"></div>
+        </form>
+      </div>
+
+      <!-- LISTA DE PUBLICAÇÕES SALVAS -->
+      <div class="card">
+        <h3>Publicações no Ar</h3>
+        <div id="lista-posts" class="post-list">
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Carregando publicações...</p>
         </div>
-
-        <!-- GERENCIAR BLOG -->
-        <div class="admin-section">
-            <h3>Gerenciar Artigos do Blog</h3>
-            <form onsubmit="salvarArtigoBlog(event)" style="margin-bottom: 30px;">
-                <input type="hidden" id="editIndex" value="">
-                <div class="form-group">
-                    <label>Título do Artigo *</label>
-                    <input type="text" id="postTitulo" required placeholder="Ex.: Como funciona a liminar...">
-                </div>
-                <div class="form-group">
-                    <label>Área Jurídica *</label>
-                    <select id="postArea" required>
-                        <option value="" disabled selected>Selecione a área...</option>
-                        <option value="Cível">Cível</option>
-                        <option value="Consumidor">Consumidor</option>
-                        <option value="Família">Família</option>
-                        <option value="Saúde">Saúde</option>
-                        <option value="Empresarial">Empresarial</option>
-                        <option value="Trabalhista">Trabalhista</option>
-                        <option value="Previdenciário">Previdenciário</option>
-                        <option value="Imobiliário">Imobiliário</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Data de Publicação *</label>
-                    <input type="text" id="postData" required placeholder="Ex.: 06/11/2026">
-                </div>
-                <div class="form-group">
-                    <label>URL da Imagem de Capa</label>
-                    <input type="text" id="postImagem" placeholder="https://exemplo.com/imagem.jpg">
-                </div>
-                <div class="form-group">
-                    <label>Resumo (Cards) *</label>
-                    <textarea id="postResumo" rows="3" required placeholder="Breve resumo que aparece na listagem..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Conteúdo Completo do Artigo *</label>
-                    <textarea id="postConteudo" rows="6" required placeholder="Texto completo do artigo..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Status *</label>
-                    <select id="postStatus" required>
-                        <option value="Publicado">Publicado</option>
-                        <option value="Rascunho">Rascunho</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn-admin">Salvar Artigo</button>
-            </form>
-
-            <h4>Artigos Cadastrados</h4>
-            <div id="listaArtigosAdmin" class="lista-gerenciamento"></div>
-        </div>
-
-        <!-- GERENCIAR INSTAGRAM -->
-        <div class="admin-section">
-            <h3>Gerenciar Cards do Instagram (Exibidos no Blog)</h3>
-            <form onsubmit="salvarCardInstagram(event)" style="margin-bottom: 30px;">
-                <input type="hidden" id="editInstaIndex" value="">
-                <div class="form-group">
-                    <label>URL da Imagem do Post do Instagram *</label>
-                    <input type="text" id="instaImagem" required placeholder="https://exemplo.com/post.jpg">
-                </div>
-                <div class="form-group">
-                    <label>Link Direto para a Publicação no Instagram *</label>
-                    <input type="url" id="instaLink" required placeholder="https://www.instagram.com/p/...">
-                </div>
-                <button type="submit" class="btn-admin">Salvar Card do Instagram</button>
-            </form>
-
-            <h4>Cards Cadastrados</h4>
-            <div id="listaInstagramAdmin" class="lista-gerenciamento"></div>
-        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- SCRIPT DO PAINEL ADMIN -->
-    <script>
-        function fazerLogin(e) {
-            e.preventDefault();
-            const usuario = document.getElementById('adminUser').value.trim();
-            const senha = document.getElementById('adminSenha').value.trim();
+  <script>
+    let senhaAtual = sessionStorage.getItem("fs_admin_pass") || "";
+    let postsCache = [];
 
-            if (usuario === 'admin' && senha === 'admin123') {
-                localStorage.setItem('fs_logado', 'true');
-                verificarSessao();
-            } else {
-                alert('Usuário ou senha incorretos.');
-            }
+    // Define data de hoje por padrão
+    document.getElementById("data").valueAsDate = new Date();
+
+    // Verifica se já está logado na sessão
+    if (senhaAtual) {
+      iniciarPainel();
+    }
+
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const senhaDigitada = document.getElementById("senha-input").value.trim();
+      const erroEl = document.getElementById("login-erro");
+      erroEl.textContent = "Verificando...";
+
+      // Testa a senha enviando uma requisição de validação leve
+      try {
+        const resp = await fetch("/api/posts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": senhaDigitada
+          },
+          body: JSON.stringify({ acao: "validar" })
+        });
+
+        if (resp.status === 401) {
+          erroEl.textContent = "Senha incorreta. Tente novamente.";
+          return;
         }
 
-        function fazerLogout() {
-            localStorage.removeItem('fs_logado');
-            verificarSessao();
+        senhaAtual = senhaDigitada;
+        sessionStorage.setItem("fs_admin_pass", senhaAtual);
+        erroEl.textContent = "";
+        iniciarPainel();
+      } catch (err) {
+        erroEl.textContent = "Erro de conexão com o servidor.";
+      }
+    });
+
+    function iniciarPainel() {
+      document.getElementById("login-screen").style.display = "none";
+      document.getElementById("admin-panel").style.display = "block";
+      carregarPosts();
+    }
+
+    function sair() {
+      sessionStorage.removeItem("fs_admin_pass");
+      location.reload();
+    }
+
+    function alternarCampos() {
+      const tipo = document.getElementById("tipo").value;
+      document.getElementById("grupo-link").style.display = tipo === "instagram" ? "block" : "none";
+      document.getElementById("grupo-conteudo").style.display = tipo === "artigo" ? "block" : "none";
+    }
+
+    // Otimiza e converte a imagem escolhida para Base64 leve
+    function processarImagem(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement("canvas");
+          const MAX_WIDTH = 800;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > MAX_WIDTH) {
+            height = Math.round((height * MAX_WIDTH) / width);
+            width = MAX_WIDTH;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+
+          const dataUrl = canvas.toDataURL("image/jpeg", 0.78);
+          document.getElementById("imagem-base64").value = dataUrl;
+          document.getElementById("preview-img").src = dataUrl;
+          document.getElementById("preview-box").style.display = "block";
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function carregarPosts() {
+      const listaEl = document.getElementById("lista-posts");
+      try {
+        const resp = await fetch("/api/posts");
+        postsCache = await resp.json();
+
+        if (!postsCache.length) {
+          listaEl.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem;">Nenhuma publicação cadastrada ainda.</p>';
+          return;
         }
 
-        function verificarSessao() {
-            const logado = localStorage.getItem('fs_logado');
-            if (logado === 'true') {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-                carregarListasAdmin();
-            } else {
-                document.getElementById('loginScreen').style.display = 'flex';
-                document.getElementById('adminPanel').style.display = 'none';
-            }
+        listaEl.innerHTML = postsCache.map(post => `
+          <div class="post-item">
+            <div class="post-info">
+              <div>
+                <span class="badge">${post.tipo === 'instagram' ? 'Instagram' : 'Artigo'}</span>
+                <span class="post-meta">${post.area} • ${formatarData(post.data)}</span>
+              </div>
+              <h4>${post.titulo}</h4>
+              <span class="post-meta">Status: ${post.status === 'publicado' ? 'Publicado' : 'Rascunho'}</span>
+            </div>
+            <div class="post-actions">
+              <button class="btn btn-edit" onclick="editarPost(${post.id})">Editar</button>
+              <button class="btn btn-danger" onclick="excluirPost(${post.id})">Excluir</button>
+            </div>
+          </div>
+        `).join("");
+      } catch (err) {
+        listaEl.innerHTML = '<p style="color: #ff7b77;">Erro ao carregar publicações.</p>';
+      }
+    }
+
+    document.getElementById("post-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btnSalvar = document.getElementById("btn-salvar");
+      const statusEl = document.getElementById("form-status");
+
+      btnSalvar.disabled = true;
+      btnSalvar.textContent = "Salvando na nuvem...";
+      statusEl.textContent = "";
+
+      const payload = {
+        id: document.getElementById("post-id").value || null,
+        tipo: document.getElementById("tipo").value,
+        titulo: document.getElementById("titulo").value.trim(),
+        area: document.getElementById("area").value,
+        data: document.getElementById("data").value,
+        imagem: document.getElementById("imagem-base64").value,
+        resumo: document.getElementById("resumo").value.trim(),
+        conteudo: document.getElementById("conteudo").value.trim(),
+        link: document.getElementById("link").value.trim(),
+        status: document.getElementById("status").value
+      };
+
+      try {
+        const resp = await fetch("/api/posts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": senhaAtual
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const resultado = await resp.json();
+        if (resultado.sucesso) {
+          statusEl.style.color = "#68d391";
+          statusEl.textContent = "Publicação salva com sucesso!";
+          limparFormulario();
+          carregarPosts();
+        } else {
+          statusEl.style.color = "#ff7b77";
+          statusEl.textContent = "Erro: " + (resultado.erro || "Falha ao salvar.");
         }
+      } catch (err) {
+        statusEl.style.color = "#ff7b77";
+        statusEl.textContent = "Erro de conexão ao salvar.";
+      } finally {
+        btnSalvar.disabled = false;
+        btnSalvar.textContent = "Salvar Publicação";
+      }
+    });
 
-        function salvarArtigoBlog(e) {
-            e.preventDefault();
-            const index = document.getElementById('editIndex').value;
-            const novoPost = {
-                titulo: document.getElementById('postTitulo').value.trim(),
-                area: document.getElementById('postArea').value,
-                data: document.getElementById('postData').value.trim(),
-                imagem: document.getElementById('postImagem').value.trim(),
-                resumo: document.getElementById('postResumo').value.trim(),
-                conteudo: document.getElementById('postConteudo').value.trim(),
-                status: document.getElementById('postStatus').value
-            };
+    function editarPost(id) {
+      const post = postsCache.find(p => p.id === id);
+      if (!post) return;
 
-            let posts = JSON.parse(localStorage.getItem('fs_blog_posts') || '[]');
-            if (index === '') {
-                posts.unshift(novoPost);
-            } else {
-                posts[index] = novoPost;
-            }
+      document.getElementById("form-titulo").textContent = "Editando Publicação";
+      document.getElementById("post-id").value = post.id;
+      document.getElementById("tipo").value = post.tipo || "artigo";
+      alternarCampos();
+      document.getElementById("titulo").value = post.titulo || "";
+      document.getElementById("area").value = post.area || "Direito da Saúde";
+      document.getElementById("data").value = post.data || "";
+      document.getElementById("resumo").value = post.resumo || "";
+      document.getElementById("conteudo").value = post.conteudo || "";
+      document.getElementById("link").value = post.link || "";
+      document.getElementById("status").value = post.status || "publicado";
+      document.getElementById("imagem-base64").value = post.imagem || "";
 
-            localStorage.setItem('fs_blog_posts', JSON.stringify(posts));
-            e.target.reset();
-            document.getElementById('editIndex').value = '';
-            carregarListasAdmin();
-            alert('Artigo salvo com sucesso!');
+      if (post.imagem) {
+        document.getElementById("preview-img").src = post.imagem;
+        document.getElementById("preview-box").style.display = "block";
+      } else {
+        document.getElementById("preview-box").style.display = "none";
+      }
+
+      document.getElementById("btn-cancelar").style.display = "inline-flex";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    async function excluirPost(id) {
+      if (!confirm("Tem certeza que deseja excluir esta publicação?")) return;
+
+      try {
+        const resp = await fetch("/api/posts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": senhaAtual
+          },
+          body: JSON.stringify({ acao: "excluir", id: id })
+        });
+        const res = await resp.json();
+        if (res.sucesso) {
+          carregarPosts();
         }
+      } catch (err) {
+        alert("Erro ao excluir publicação.");
+      }
+    }
 
-        function salvarCardInstagram(e) {
-            e.preventDefault();
-            const index = document.getElementById('editInstaIndex').value;
-            const novoInsta = {
-                imagem: document.getElementById('instaImagem').value.trim(),
-                link: document.getElementById('instaLink').value.trim()
-            };
+    function limparFormulario() {
+      document.getElementById("form-titulo").textContent = "Nova Publicação";
+      document.getElementById("post-form").reset();
+      document.getElementById("post-id").value = "";
+      document.getElementById("imagem-base64").value = "";
+      document.getElementById("preview-box").style.display = "none";
+      document.getElementById("data").valueAsDate = new Date();
+      document.getElementById("btn-cancelar").style.display = "none";
+      alternarCampos();
+    }
 
-            let insta = JSON.parse(localStorage.getItem('fs_insta_ativos') || '[]');
-            if (index === '') {
-                insta.unshift(novoInsta);
-            } else {
-                insta[index] = novoInsta;
-            }
-
-            localStorage.setItem('fs_insta_ativos', JSON.stringify(insta));
-            e.target.reset();
-            document.getElementById('editInstaIndex').value = '';
-            carregarListasAdmin();
-            alert('Card do Instagram salvo com sucesso!');
-        }
-
-        function carregarListasAdmin() {
-            // Carregar Artigos
-            const posts = JSON.parse(localStorage.getItem('fs_blog_posts') || '[]');
-            const containerArtigos = document.getElementById('listaArtigosAdmin');
-            if (posts.length === 0) {
-                containerArtigos.innerHTML = '<span style="color: #777; font-size: 13px;">Nenhum artigo cadastrado.</span>';
-            } else {
-                let htmlArtigos = '';
-                posts.forEach((p, idx) => {
-                    htmlArtigos += `
-                        <div class="item-gerenciado">
-                            <div>
-                                <h4>${p.titulo}</h4>
-                                <span>Área: ${p.area} · Status: ${p.status}</span>
-                            </div>
-                            <div class="acoes-item">
-                                <button class="btn-acao editar" onclick="editarArtigo(${idx})">Editar</button>
-                                <button class="btn-acao deletar" onclick="deletarArtigo(${idx})">Excluir</button>
-                            </div>
-                        </div>
-                    `;
-                });
-                containerArtigos.innerHTML = htmlArtigos;
-            }
-
-            // Carregar Instagram
-            const insta = JSON.parse(localStorage.getItem('fs_insta_ativos') || '[]');
-            const containerInsta = document.getElementById('listaInstagramAdmin');
-            if (insta.length === 0) {
-                containerInsta.innerHTML = '<span style="color: #777; font-size: 13px;">Nenhum card do Instagram cadastrado.</span>';
-            } else {
-                let htmlInsta = '';
-                insta.forEach((item, idx) => {
-                    htmlInsta += `
-                        <div class="item-gerenciado">
-                            <div>
-                                <h4>Card #${idx + 1}</h4>
-                                <span><a href="${item.link}" target="_blank" style="color: var(--cor-dourado);">Ver Link</a></span>
-                            </div>
-                            <div class="acoes-item">
-                                <button class="btn-acao deletar" onclick="deletarInstagram(${idx})">Excluir</button>
-                            </div>
-                        </div>
-                    `;
-                });
-                containerInsta.innerHTML = htmlInsta;
-            }
-        }
-
-        function editarArtigo(idx) {
-            const posts = JSON.parse(localStorage.getItem('fs_blog_posts') || '[]');
-            const p = posts[idx];
-            if (!p) return;
-
-            document.getElementById('editIndex').value = idx;
-            document.getElementById('postTitulo').value = p.titulo;
-            document.getElementById('postArea').value = p.area;
-            document.getElementById('postData').value = p.data;
-            document.getElementById('postImagem').value = p.imagem || '';
-            document.getElementById('postResumo').value = p.resumo;
-            document.getElementById('postConteudo').value = p.conteudo;
-            document.getElementById('postStatus').value = p.status;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function deletarArtigo(idx) {
-            if (confirm('Deseja realmente excluir este artigo?')) {
-                let posts = JSON.parse(localStorage.getItem('fs_blog_posts') || '[]');
-                posts.splice(idx, 1);
-                localStorage.setItem('fs_blog_posts', JSON.stringify(posts));
-                carregarListasAdmin();
-            }
-        }
-
-        function deletarInstagram(idx) {
-            if (confirm('Deseja realmente excluir este card do Instagram?')) {
-                let insta = JSON.parse(localStorage.getItem('fs_insta_ativos') || '[]');
-                insta.splice(idx, 1);
-                localStorage.setItem('fs_insta_ativos', JSON.stringify(insta));
-                carregarListasAdmin();
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', verificarSessao);
-    </script>
+    function formatarData(dataStr) {
+      if (!dataStr) return "";
+      const partes = dataStr.split("-");
+      return partes.length === 3 ? `${partes[2]}/${partes[1]}/${partes[0]}` : dataStr;
+    }
+  </script>
 </body>
 </html>

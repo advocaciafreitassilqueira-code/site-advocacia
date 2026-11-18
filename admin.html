@@ -290,7 +290,7 @@
       <form id="login-form">
         <div class="form-group">
           <label>Usuário</label>
-          <input type="text" id="usuario-input" value="Stefania" required>
+          <input type="text" id="usuario-input" placeholder="Digite seu nome" required>
         </div>
         <div class="form-group">
           <label>Senha</label>
@@ -416,16 +416,16 @@
 
     document.getElementById("login-form").addEventListener("submit", (e) => {
       e.preventDefault();
-      const usuario = document.getElementById("usuario-input").value.trim().toLowerCase();
+      const usuario = document.getElementById("usuario-input").value.trim();
       const senha = document.getElementById("senha-input").value.trim();
       const erroEl = document.getElementById("login-erro");
 
-      if (usuario === "stefania" && senha === senhaMaster) {
+      if (senha === senhaMaster) {
         sessionStorage.setItem("fs_logado", "true");
         erroEl.textContent = "";
         iniciarPainel();
       } else {
-        erroEl.textContent = "Usuário ou senha incorretos.";
+        erroEl.textContent = "Senha incorreta.";
       }
     });
 

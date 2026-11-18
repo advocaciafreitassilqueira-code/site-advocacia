@@ -8,11 +8,13 @@
     :root {
       --bg-dark: #111214;
       --bg-card: #1a1c20;
+      --bg-input: #23262b;
       --gold: #c9a45c;
       --gold-hover: #dfbc74;
       --text-main: #f2f2f2;
       --text-muted: #9da3ae;
       --border: #2e3239;
+      --danger: #d9534f;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
@@ -20,11 +22,14 @@
     body {
       background-color: var(--bg-dark);
       color: var(--text-main);
-      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
+    /* HEADER DO SITE */
     header {
-      background: var(--bg-card);
+      background: rgba(17, 18, 20, 0.95);
       border-bottom: 1px solid var(--border);
       padding: 16px 32px;
       display: flex;
@@ -35,265 +40,576 @@
       z-index: 100;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
+    .brand-title {
+      color: var(--gold);
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
-
-    .brand img { height: 45px; }
-    .brand span { font-size: 1.15rem; color: var(--gold); font-weight: 600; }
 
     .nav-links {
       display: flex;
-      gap: 20px;
+      gap: 24px;
+      list-style: none;
       align-items: center;
     }
 
     .nav-links a {
       color: var(--text-main);
       text-decoration: none;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       transition: color 0.2s;
     }
 
     .nav-links a:hover { color: var(--gold); }
 
-    .btn-admin {
-      background: rgba(201, 164, 92, 0.15);
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-size: 0.88rem;
+    .btn-wapp {
+      background: var(--gold);
+      color: #111;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-weight: 600;
       text-decoration: none;
-      transition: 0.2s;
+      font-size: 0.9rem;
+      transition: background 0.2s;
     }
 
-    .btn-admin:hover { background: var(--gold); color: #111; }
+    .btn-wapp:hover { background: var(--gold-hover); }
 
-    /* Seção de Apresentação / Hero */
+    /* CONTEÚDO PRINCIPAL (HOME) */
+    #site-content {
+      flex: 1;
+    }
+
     .hero {
       padding: 80px 20px;
       text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
+      background: linear-gradient(rgba(17,18,20,0.85), rgba(17,18,20,0.95)), url('hero-bg.jpg') center/cover;
     }
 
     .hero h1 {
       font-size: 2.5rem;
-      color: var(--gold);
+      color: var(--text-main);
       margin-bottom: 16px;
+      font-weight: 400;
+    }
+
+    .hero h1 span {
+      color: var(--gold);
       font-weight: 600;
     }
 
     .hero p {
       color: var(--text-muted);
       font-size: 1.1rem;
-      margin-bottom: 30px;
+      max-width: 700px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
     }
 
-    /* Container principal de conteúdos */
-    .container {
+    /* ÁREA DO PAINEL ADMINISTRATIVO EMBUTIDO */
+    #admin-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(17, 18, 20, 0.98);
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 30px 20px;
+    }
+
+    .admin-container {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 40px 20px 80px;
     }
 
-    .section-title {
-      font-size: 1.5rem;
+    .login-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
+      padding: 40px 32px;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      margin: 100px auto;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    }
+
+    .login-box h2 {
       color: var(--gold);
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .login-box p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
       margin-bottom: 24px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
     }
 
-    .posts-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-      margin-bottom: 50px;
-    }
-
-    .post-card {
+    /* ESTILOS DO PAINEL */
+    .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 8px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s, border-color 0.2s;
+      padding: 24px;
+      margin-bottom: 24px;
     }
 
-    .post-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--gold);
-    }
-
-    .post-img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      background: #23262b;
-    }
-
-    .post-content {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-
-    .post-meta {
-      font-size: 0.8rem;
+    .card h3 {
       color: var(--gold);
-      text-transform: uppercase;
-      font-weight: 600;
-      margin-bottom: 8px;
+      font-size: 1.1rem;
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
     }
 
-    .post-card h3 {
-      font-size: 1.15rem;
-      color: var(--text-main);
-      margin-bottom: 10px;
-      line-height: 1.4;
-    }
+    .form-group { margin-bottom: 16px; text-align: left; }
 
-    .post-card p {
+    label {
+      display: block;
+      font-size: 0.85rem;
       color: var(--text-muted);
-      font-size: 0.92rem;
-      margin-bottom: 16px;
-      flex-grow: 1;
+      margin-bottom: 6px;
     }
 
-    .post-link {
-      color: var(--gold);
-      text-decoration: none;
+    input[type="text"],
+    input[type="password"],
+    input[type="date"],
+    input[type="url"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px 14px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+    textarea { resize: vertical; min-height: 90px; }
+
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 11px 18px;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.95rem;
       font-weight: 600;
-      font-size: 0.9rem;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
     }
 
-    .post-link:hover { text-decoration: underline; }
+    .btn-gold { background: var(--gold); color: #111; width: 100%; }
+    .btn-gold:hover { background: var(--gold-hover); }
 
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 14px;
+      font-size: 0.85rem;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    .btn-danger {
+      background: rgba(217, 83, 79, 0.15);
+      color: #ff7b77;
+      border: 1px solid rgba(217, 83, 79, 0.3);
+      padding: 6px 10px;
+      font-size: 0.8rem;
+    }
+    .btn-danger:hover { background: var(--danger); color: #fff; }
+
+    .btn-edit {
+      background: rgba(201, 164, 92, 0.15);
+      color: var(--gold);
+      border: 1px solid rgba(201, 164, 92, 0.3);
+      padding: 6px 10px;
+      font-size: 0.8rem;
+    }
+    .btn-edit:hover { background: var(--gold); color: #111; }
+
+    .post-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .post-item {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .post-info h4 { font-size: 0.98rem; color: var(--text-main); margin-bottom: 4px; }
+    .badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-right: 6px;
+      background: rgba(201, 164, 92, 0.18);
+      color: var(--gold);
+    }
+    .post-meta { font-size: 0.8rem; color: var(--text-muted); }
+    .post-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .status-msg { margin-top: 12px; font-size: 0.88rem; text-align: center; min-height: 20px; }
+
+    /* FOOTER */
     footer {
-      background: var(--bg-card);
       border-top: 1px solid var(--border);
+      padding: 24px 32px;
       text-align: center;
-      padding: 30px 20px;
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    @media (max-width: 600px) {
-      header { padding: 16px 20px; flex-direction: column; gap: 12px; }
-      .hero h1 { font-size: 2rem; }
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
     }
+    footer a:hover { color: var(--gold); }
   </style>
 </head>
 <body>
 
+  <!-- HEADER -->
   <header>
-    <div class="brand">
-      <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
-      <span>Freitas Silqueira Advocacia</span>
-    </div>
-    <div class="nav-links">
-      <a href="#artigos">Artigos</a>
-      <a href="#instagram">Instagram</a>
-      <a href="admin.html" class="btn-admin">Área Restrita</a>
-    </div>
+    <div class="brand-title">Freitas Silqueira Advocacia</div>
+    <ul class="nav-links">
+      <li><a href="#">Início</a></li>
+      <li><a href="#">Áreas</a></li>
+      <li><a href="#">Escritório</a></li>
+      <li><a href="#">Contato</a></li>
+      <li><a href="https://wa.me/5511999999999" target="_blank" class="btn-wapp">Fale Conosco</a></li>
+    </ul>
   </header>
 
-  <section class="hero">
-    <h1>Excelência e Comprometimento Jurídico</h1>
-    <p>Atuação especializada com rigor técnico, ética e defesa intransigente dos direitos de nossos clientes.</p>
-  </section>
+  <!-- CONTEÚDO DA HOME -->
+  <div id="site-content">
+    <section class="hero">
+      <h1>Excelência, Rigor Técnico e Defesa <span>Estratégica.</span></h1>
+      <p>Soluções jurídicas especializadas em múltiplas frentes do Direito, unindo atendimento personalizado, rigor técnico, ética e atuação digital em todo o Brasil.</p>
+    </section>
+  </div>
 
-  <div class="container">
-    <!-- ARTIGOS / BLOG -->
-    <div id="artigos">
-      <h2 class="section-title">Artigos e Informativos</h2>
-      <div id="grid-artigos" class="posts-grid">
-        <p style="color: var(--text-muted);">Carregando artigos...</p>
+  <!-- PAINEL ADMINISTRATIVO EMBUTIDO (ABRE PELO RODAPÉ) -->
+  <div id="admin-overlay">
+    <div class="admin-container">
+      
+      <!-- TELA DE LOGIN INTERNA -->
+      <div id="login-screen" class="login-box">
+        <h2>Acesso Restrito</h2>
+        <p>Freitas Silqueira Advocacia</p>
+        <form id="login-form">
+          <div class="form-group">
+            <label>Senha de Acesso</label>
+            <input type="password" id="senha-input" placeholder="Digite a senha" required>
+          </div>
+          <button type="submit" class="btn btn-gold" style="margin-top: 6px;">Entrar no Painel</button>
+          <div id="login-erro" class="status-msg" style="color: #ff7b77;"></div>
+        </form>
+        <button onclick="fecharPainel()" class="btn btn-outline" style="margin-top: 16px; width: 100%;">Fechar / Voltar ao Site</button>
       </div>
-    </div>
 
-    <!-- DESTAQUES DO INSTAGRAM -->
-    <div id="instagram" style="margin-top: 60px;">
-      <h2 class="section-title">Últimas no Instagram</h2>
-      <div id="grid-instagram" class="posts-grid">
-        <p style="color: var(--text-muted);">Carregando publicações...</p>
+      <!-- PAINEL DE GESTÃO -->
+      <div id="admin-panel" style="display: none;">
+        <header style="background: transparent; border: none; padding: 0 0 20px 0;">
+          <h2 style="color: var(--gold); font-size: 1.4rem;">Gestão de Conteúdo | Painel Administrativo</h2>
+          <div style="display: flex; gap: 10px;">
+            <button onclick="fecharPainel()" class="btn btn-outline">Fechar Painel</button>
+            <button onclick="sair()" class="btn btn-outline">Sair</button>
+          </div>
+        </header>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          <!-- FORMULÁRIO -->
+          <div class="card">
+            <h3 id="form-titulo">Nova Publicação</h3>
+            <form id="post-form">
+              <input type="hidden" id="post-id">
+              <input type="hidden" id="imagem-base64">
+
+              <div class="row-2">
+                <div class="form-group">
+                  <label>Tipo</label>
+                  <select id="tipo" onchange="alternarCampos()">
+                    <option value="artigo">Artigo Jurídico (Blog)</option>
+                    <option value="instagram">Destaque Instagram</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Data</label>
+                  <input type="date" id="data" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Título</label>
+                <input type="text" id="titulo" placeholder="Título da postagem" required>
+              </div>
+
+              <div class="row-2">
+                <div class="form-group">
+                  <label>Área</label>
+                  <select id="area">
+                    <option value="Direito da Saúde">Direito da Saúde</option>
+                    <option value="Direito Criminal / Habeas Corpus">Direito Criminal / Habeas Corpus</option>
+                    <option value="Direito Previdenciário">Direito Previdenciário</option>
+                    <option value="Direito Civil e Família">Direito Civil e Família</option>
+                    <option value="Informativo Institucional">Informativo Institucional</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Status</label>
+                  <select id="status">
+                    <option value="publicado">Publicado</option>
+                    <option value="rascunho">Rascunho</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Imagem de Capa</label>
+                <input type="file" id="arquivo-imagem" accept="image/*" onchange="processarImagem(event)">
+              </div>
+
+              <div class="form-group" id="grupo-link" style="display: none;">
+                <label>Link do Instagram</label>
+                <input type="url" id="link" placeholder="https://www.instagram.com/p/...">
+              </div>
+
+              <div class="form-group">
+                <label>Resumo Curto</label>
+                <textarea id="resumo" rows="2" placeholder="Breve descrição..." required></textarea>
+              </div>
+
+              <div class="form-group" id="grupo-conteudo">
+                <label>Texto Completo</label>
+                <textarea id="conteudo" rows="4" placeholder="Escreva o conteúdo..."></textarea>
+              </div>
+
+              <div style="display: flex; gap: 10px;">
+                <button type="submit" class="btn btn-gold" id="btn-salvar">Salvar Publicação</button>
+                <button type="button" class="btn btn-outline" id="btn-cancelar" style="display: none;" onclick="limparFormulario()">Cancelar</button>
+              </div>
+              <div id="form-status" class="status-msg"></div>
+            </form>
+          </div>
+
+          <!-- LISTA -->
+          <div class="card">
+            <h3>Publicações Existentes</h3>
+            <div id="lista-posts" class="post-list">
+              <p style="color: var(--text-muted); font-size: 0.9rem;">Carregando...</p>
+            </div>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 
+  <!-- FOOTER -->
   <footer>
-    <p>&copy; Freitas Silqueira Advocacia e Consultoria Jurídica. Todos os direitos reservados.</p>
+    <div>© 2026 Freitas Silqueira Advocacia. Todos os direitos reservados.</div>
+    <div><a href="#" onclick="abrirPainel(event)">Área Restrita</a></div>
   </footer>
 
   <script>
-    async function carregarSite() {
-      try {
-        const resp = await fetch("/api/posts");
-        const posts = await resp.json();
+    let senhaMaster = "Freitas@2026";
+    let postsCache = [];
+    document.getElementById("data").valueAsDate = new Date();
 
-        // Filtra apenas os publicados
-        const ativos = posts.filter(p => p.status !== 'rascunho');
-
-        const artigos = ativos.filter(p => p.tipo !== 'instagram');
-        const instagram = ativos.filter(p => p.tipo === 'instagram');
-
-        // Renderiza Artigos
-        const gridArtigos = document.getElementById("grid-artigos");
-        if (artigos.length === 0) {
-          gridArtigos.innerHTML = '<p style="color: var(--text-muted);">Nenhum artigo publicado no momento.</p>';
-        } else {
-          gridArtigos.innerHTML = artigos.map(item => `
-            <div class="post-card">
-              ${item.imagem ? `<img src="${item.imagem}" class="post-img" alt="${item.titulo}">` : ''}
-              <div class="post-content">
-                <span class="post-meta">${item.area} • ${formatarData(item.data)}</span>
-                <h3>${item.titulo}</h3>
-                <p>${item.resumo}</p>
-              </div>
-            </div>
-          `).join("");
-        }
-
-        // Renderiza Instagram
-        const gridInsta = document.getElementById("grid-instagram");
-        if (instagram.length === 0) {
-          gridInsta.innerHTML = '<p style="color: var(--text-muted);">Nenhum destaque do Instagram no momento.</p>';
-        } else {
-          gridInsta.innerHTML = instagram.map(item => `
-            <div class="post-card">
-              ${item.imagem ? `<img src="${item.imagem}" class="post-img" alt="${item.titulo}">` : ''}
-              <div class="post-content">
-                <span class="post-meta">Instagram • ${formatarData(item.data)}</span>
-                <h3>${item.titulo}</h3>
-                <p>${item.resumo}</p>
-                ${item.link ? `<a href="${item.link}" target="_blank" class="post-link">Ver publicação no Instagram &rarr;</a>` : ''}
-              </div>
-            </div>
-          `).join("");
-        }
-
-      } catch (err) {
-        document.getElementById("grid-artigos").innerHTML = '<p style="color: #ff7b77;">Erro ao carregar conteúdos.</p>';
-        document.getElementById("grid-instagram").innerHTML = '<p style="color: #ff7b77;">Erro ao carregar conteúdos.</p>';
+    function abrirPainel(e) {
+      e.preventDefault();
+      document.getElementById("admin-overlay").style.display = "block";
+      if (sessionStorage.getItem("fs_logado") === "true") {
+        document.getElementById("login-screen").style.display = "none";
+        document.getElementById("admin-panel").style.display = "block";
+        carregarPosts();
+      } else {
+        document.getElementById("login-screen").style.display = "block";
+        document.getElementById("admin-panel").style.display = "none";
       }
     }
 
-    function formatarData(dataStr) {
-      if (!dataStr) return "";
-      const partes = dataStr.split("-");
-      return partes.length === 3 ? `${partes[2]}/${partes[1]}/${partes[0]}` : dataStr;
+    function fecharPainel() {
+      document.getElementById("admin-overlay").style.display = "none";
     }
 
-    carregarSite();
+    document.getElementById("login-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const senha = document.getElementById("senha-input").value.trim();
+      const erroEl = document.getElementById("login-erro");
+
+      if (senha === senhaMaster) {
+        sessionStorage.setItem("fs_logado", "true");
+        erroEl.textContent = "";
+        document.getElementById("login-screen").style.display = "none";
+        document.getElementById("admin-panel").style.display = "block";
+        carregarPosts();
+      } else {
+        erroEl.textContent = "Senha incorreta.";
+      }
+    });
+
+    function sair() {
+      sessionStorage.removeItem("fs_logado");
+      document.getElementById("admin-panel").style.display = "none";
+      document.getElementById("login-screen").style.display = "block";
+    }
+
+    function alternarCampos() {
+      const tipo = document.getElementById("tipo").value;
+      document.getElementById("grupo-link").style.display = tipo === "instagram" ? "block" : "none";
+      document.getElementById("grupo-conteudo").style.display = tipo === "artigo" ? "block" : "none";
+    }
+
+    function processarImagem(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement("canvas");
+          const MAX_WIDTH = 800;
+          let width = img.width;
+          let height = img.height;
+          if (width > MAX_WIDTH) {
+            height = Math.round((height * MAX_WIDTH) / width);
+            width = MAX_WIDTH;
+          }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+          document.getElementById("imagem-base64").value = canvas.toDataURL("image/jpeg", 0.78);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function carregarPosts() {
+      const listaEl = document.getElementById("lista-posts");
+      try {
+        const resp = await fetch("/api/posts");
+        postsCache = await resp.json();
+        if (!postsCache.length) {
+          listaEl.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem;">Nenhuma publicação.</p>';
+          return;
+        }
+        listaEl.innerHTML = postsCache.map(post => `
+          <div class="post-item">
+            <div class="post-info">
+              <div><span class="badge">${post.tipo}</span><span class="post-meta">${post.area}</span></div>
+              <h4>${post.titulo}</h4>
+            </div>
+            <div class="post-actions">
+              <button class="btn btn-edit" onclick="editarPost(${post.id})">Editar</button>
+              <button class="btn btn-danger" onclick="excluirPost(${post.id})">Excluir</button>
+            </div>
+          </div>
+        `).join("");
+      } catch (err) {
+        listaEl.innerHTML = '<p style="color: #ff7b77;">Erro ao carregar.</p>';
+      }
+    }
+
+    document.getElementById("post-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const payload = {
+        id: document.getElementById("post-id").value || null,
+        tipo: document.getElementById("tipo").value,
+        titulo: document.getElementById("titulo").value.trim(),
+        area: document.getElementById("area").value,
+        data: document.getElementById("data").value,
+        imagem: document.getElementById("imagem-base64").value,
+        resumo: document.getElementById("resumo").value.trim(),
+        conteudo: document.getElementById("conteudo").value.trim(),
+        link: document.getElementById("link").value.trim(),
+        status: document.getElementById("status").value
+      };
+
+      const resp = await fetch("/api/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": senhaMaster },
+        body: JSON.stringify(payload)
+      });
+      const res = await resp.json();
+      if (res.sucesso) {
+        document.getElementById("form-status").style.color = "#68d391";
+        document.getElementById("form-status").textContent = "Salvo com sucesso!";
+        limparFormulario();
+        carregarPosts();
+      }
+    });
+
+    function editarPost(id) {
+      const post = postsCache.find(p => p.id === id);
+      if (!post) return;
+      document.getElementById("form-titulo").textContent = "Editando";
+      document.getElementById("post-id").value = post.id;
+      document.getElementById("tipo").value = post.tipo || "artigo";
+      alternarCampos();
+      document.getElementById("titulo").value = post.titulo || "";
+      document.getElementById("area").value = post.area || "";
+      document.getElementById("data").value = post.data || "";
+      document.getElementById("resumo").value = post.resumo || "";
+      document.getElementById("conteudo").value = post.conteudo || "";
+      document.getElementById("link").value = post.link || "";
+      document.getElementById("status").value = post.status || "publicado";
+      document.getElementById("imagem-base64").value = post.imagem || "";
+      document.getElementById("btn-cancelar").style.display = "inline-flex";
+    }
+
+    async function excluirPost(id) {
+      if (!confirm("Deseja excluir?")) return;
+      await fetch("/api/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": senhaMaster },
+        body: JSON.stringify({ acao: "excluir", id: id })
+      });
+      carregarPosts();
+    }
+
+    function limparFormulario() {
+      document.getElementById("form-titulo").textContent = "Nova Publicação";
+      document.getElementById("post-form").reset();
+      document.getElementById("post-id").value = "";
+      document.getElementById("imagem-base64").value = "";
+      document.getElementById("data").valueAsDate = new Date();
+      document.getElementById("btn-cancelar").style.display = "none";
+      alternarCampos();
+    }
   </script>
 </body>
 </html>

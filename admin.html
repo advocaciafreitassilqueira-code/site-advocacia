@@ -316,10 +316,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function deltArtigo(idx) {
-            // ...
-        }
-
         function deletarArtigo(idx) {
             if (confirm('Deseja realmente excluir este artigo?')) {
                 let posts = JSON.parse(localStorage.getItem('fs_blog_posts') || '[]');

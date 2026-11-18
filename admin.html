@@ -42,6 +42,7 @@
             width: 100%; background-color: var(--bg-preto); border: 1px solid var(--cor-borda); padding: 12px;
             color: var(--cor-branco); font-family: 'Montserrat', sans-serif; font-size: 13px; border-radius: 2px; outline: none;
         }
+        .form-group input[type="file"] { padding: 8px; cursor: pointer; }
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--cor-dourado); }
         .btn-admin {
             width: 100%; background-color: var(--cor-dourado); color: var(--bg-preto); border: none;
@@ -67,6 +68,8 @@
         .btn-acao { background: transparent; border: 1px solid var(--cor-borda); color: var(--cor-texto); padding: 6px 12px; cursor: pointer; font-size: 11px; transition: all 0.3s; }
         .btn-acao.deletar:hover { border-color: var(--cor-erro); color: var(--cor-erro); }
         .btn-acao.editar:hover { border-color: var(--cor-dourado); color: var(--cor-dourado); }
+        
+        .preview-img-mini { width: 45px; height: 45px; object-fit: cover; border-radius: 2px; border: 1px solid var(--cor-dourado); margin-right: 12px; vertical-align: middle; }
     </style>
 </head>
 <body>
@@ -101,6 +104,8 @@
             <h3>Gerenciar Artigos do Blog</h3>
             <form onsubmit="salvarArtigoBlog(event)" style="margin-bottom: 30px;">
                 <input type="hidden" id="editIndex" value="">
+                <input type="hidden" id="postImagemBase64" value="">
+
                 <div class="form-group">
                     <label>Título do Artigo *</label>
                     <input type="text" id="postTitulo" required placeholder="Ex.: Como funciona a liminar...">
@@ -124,8 +129,8 @@
                     <input type="text" id="postData" required placeholder="Ex.: 06/11/2026">
                 </div>
                 <div class="form-group">
-                    <label>URL da Imagem de Capa</label>
-                    <input type="text" id="postImagem" placeholder="https://exemplo.com/imagem.jpg">
+                    <label>Imagem de Capa (Selecionar do Computador)</label>
+                    <input type="file" id="postArquivoImagem" accept="image/*" onchange="processarImagemBlog(event)">
                 </div>
                 <div class="form-group">
                     <label>Resumo (Cards) *</label>
@@ -154,9 +159,11 @@
             <h3>Gerenciar Cards do Instagram (Exibidos no Blog)</h3>
             <form onsubmit="salvarCardInstagram(event)" style="margin-bottom: 30px;">
                 <input type="hidden" id="editInstaIndex" value="">
+                <input type="hidden" id="instaImagemBase64" value="">
+
                 <div class="form-group">
-                    <label>URL da Imagem do Post do Instagram *</label>
-                    <input type="text" id="instaImagem" required placeholder="https://exemplo.com/post.jpg">
+                    <label>Imagem do Post (Selecionar do Computador) *</label>
+                    <input type="file" id="instaArquivoImagem" accept="image/*" onchange="processarImagemInsta(event)">
                 </div>
                 <div class="form-group">
                     <label>Link Direto para a Publicação no Instagram *</label>
@@ -202,20 +209,80 @@
             }
         }
 
+        function processarImagemBlog(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 800;
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > MAX_WIDTH) {
+                        height = Math.round((height * MAX_WIDTH) / width);
+                        width = MAX_WIDTH;
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    document.getElementById('postImagemBase64').value = canvas.toDataURL('image/jpeg', 0.8);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function processarImagemInsta(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 600;
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > MAX_WIDTH) {
+                        height = Math.round((height * MAX_WIDTH) / width);
+                        width = MAX_WIDTH;
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    document.getElementById('instaImagemBase64').value = canvas.toDataURL('image/jpeg', 0.8);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
         function salvarArtigoBlog(e) {
             e.preventDefault();
             const index = document.getElementById('editIndex').value;
+            const imagemAtual = document.getElementById('postImagemBase64').value;
+            
+            let posts = JSON.parse(localStorage.getItem('fs_blog_posts') || '[]');
+            
+            let imagemFinal = imagemAtual;
+            if (!imagemFinal && index !== '') {
+                imagemFinal = posts[index].imagem || '';
+            }
+
             const novoPost = {
                 titulo: document.getElementById('postTitulo').value.trim(),
                 area: document.getElementById('postArea').value,
                 data: document.getElementById('postData').value.trim(),
-                imagem: document.getElementById('postImagem').value.trim(),
+                imagem: imagemFinal,
                 resumo: document.getElementById('postResumo').value.trim(),
                 conteudo: document.getElementById('postConteudo').value.trim(),
                 status: document.getElementById('postStatus').value
             };
 
-            let posts = JSON.parse(localStorage.getItem('fs_blog_posts') || '[]');
             if (index === '') {
                 posts.unshift(novoPost);
             } else {
@@ -225,6 +292,7 @@
             localStorage.setItem('fs_blog_posts', JSON.stringify(posts));
             e.target.reset();
             document.getElementById('editIndex').value = '';
+            document.getElementById('postImagemBase64').value = '';
             carregarListasAdmin();
             alert('Artigo salvo com sucesso!');
         }
@@ -232,12 +300,20 @@
         function salvarCardInstagram(e) {
             e.preventDefault();
             const index = document.getElementById('editInstaIndex').value;
+            const imagemAtual = document.getElementById('instaImagemBase64').value;
+
+            let insta = JSON.parse(localStorage.getItem('fs_insta_ativos') || '[]');
+            
+            let imagemFinal = imagemAtual;
+            if (!imagemFinal && index !== '') {
+                imagemFinal = insta[index].imagem || '';
+            }
+
             const novoInsta = {
-                imagem: document.getElementById('instaImagem').value.trim(),
+                imagem: imagemFinal,
                 link: document.getElementById('instaLink').value.trim()
             };
 
-            let insta = JSON.parse(localStorage.getItem('fs_insta_ativos') || '[]');
             if (index === '') {
                 insta.unshift(novoInsta);
             } else {
@@ -247,6 +323,7 @@
             localStorage.setItem('fs_insta_ativos', JSON.stringify(insta));
             e.target.reset();
             document.getElementById('editInstaIndex').value = '';
+            document.getElementById('instaImagemBase64').value = '';
             carregarListasAdmin();
             alert('Card do Instagram salvo com sucesso!');
         }
@@ -260,11 +337,15 @@
             } else {
                 let htmlArtigos = '';
                 posts.forEach((p, idx) => {
+                    const thumb = p.imagem ? `<img src="${p.imagem}" class="preview-img-mini">` : '';
                     htmlArtigos += `
                         <div class="item-gerenciado">
-                            <div>
-                                <h4>${p.titulo}</h4>
-                                <span>Área: ${p.area} · Status: ${p.status}</span>
+                            <div style="display: flex; align-items: center;">
+                                ${thumb}
+                                <div>
+                                    <h4>${p.titulo}</h4>
+                                    <span>Área: ${p.area} · Status: ${p.status}</span>
+                                </div>
                             </div>
                             <div class="acoes-item">
                                 <button class="btn-acao editar" onclick="editarArtigo(${idx})">Editar</button>
@@ -284,11 +365,15 @@
             } else {
                 let htmlInsta = '';
                 insta.forEach((item, idx) => {
+                    const thumb = item.imagem ? `<img src="${item.imagem}" class="preview-img-mini">` : '';
                     htmlInsta += `
                         <div class="item-gerenciado">
-                            <div>
-                                <h4>Card #${idx + 1}</h4>
-                                <span><a href="${item.link}" target="_blank" style="color: var(--cor-dourado);">Ver Link</a></span>
+                            <div style="display: flex; align-items: center;">
+                                ${thumb}
+                                <div>
+                                    <h4>Card #${idx + 1}</h4>
+                                    <span><a href="${item.link}" target="_blank" style="color: var(--cor-dourado);">Ver Link</a></span>
+                                </div>
                             </div>
                             <div class="acoes-item">
                                 <button class="btn-acao deletar" onclick="deletarInstagram(${idx})">Excluir</button>
@@ -309,10 +394,10 @@
             document.getElementById('postTitulo').value = p.titulo;
             document.getElementById('postArea').value = p.area;
             document.getElementById('postData').value = p.data;
-            document.getElementById('postImagem').value = p.imagem || '';
             document.getElementById('postResumo').value = p.resumo;
             document.getElementById('postConteudo').value = p.conteudo;
             document.getElementById('postStatus').value = p.status;
+            document.getElementById('postImagemBase64').value = p.imagem || '';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 

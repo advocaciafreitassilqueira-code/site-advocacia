@@ -1,4 +1,3 @@
-// Senha mestre do painel administrativo
 const SENHA_ADMIN = "Freitas@2026";
 
 export async function onRequestGet({ env }) {
@@ -11,8 +10,7 @@ export async function onRequestGet({ env }) {
       headers: { "Content-Type": "application/json" }
     });
   } catch (erro) {
-    return new Response(JSON.stringify({ erro: erro.message }), {
-      status: 500,
+    return new Response(JSON.stringify([]), {
       headers: { "Content-Type": "application/json" }
     });
   }
@@ -30,14 +28,14 @@ export async function onRequestPost({ request, env }) {
 
     const dados = await request.json();
 
-    // Apenas validação de login (não mexe no banco)
+    // Validação de login rápida
     if (dados.acao === "validar") {
       return new Response(JSON.stringify({ sucesso: true }), {
         headers: { "Content-Type": "application/json" }
       });
     }
 
-    // Excluir postagem existente
+    // Excluir postagem
     if (dados.acao === "excluir" && dados.id) {
       await env.DB.prepare("DELETE FROM posts WHERE id = ?")
         .bind(dados.id)
@@ -47,7 +45,7 @@ export async function onRequestPost({ request, env }) {
       });
     }
 
-    // Atualizar postagem existente
+    // Salvar ou Atualizar
     if (dados.id) {
       await env.DB.prepare(
         "UPDATE posts SET tipo = ?, titulo = ?, area = ?, data = ?, imagem = ?, resumo = ?, conteudo = ?, link = ?, status = ? WHERE id = ?"
@@ -66,7 +64,6 @@ export async function onRequestPost({ request, env }) {
         )
         .run();
     } else {
-      // Criar nova postagem
       await env.DB.prepare(
         "INSERT INTO posts (tipo, titulo, area, data, imagem, resumo, conteudo, link, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
       )

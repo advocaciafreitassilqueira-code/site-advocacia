@@ -290,7 +290,7 @@
       <form id="login-form">
         <div class="form-group">
           <label>Usuário</label>
-          <input type="text" id="usuario-input" placeholder="Stefania" value="Stefania" required>
+          <input type="text" id="usuario-input" value="Stefania" required>
         </div>
         <div class="form-group">
           <label>Senha</label>
@@ -404,49 +404,28 @@
   </div>
 
   <script>
-    let senhaAtual = sessionStorage.getItem("fs_admin_pass") || "";
+    let logado = sessionStorage.getItem("fs_logado") === "true";
+    let senhaMaster = "Freitas@2026";
     let postsCache = [];
 
     document.getElementById("data").valueAsDate = new Date();
 
-    if (senhaAtual) {
+    if (logado) {
       iniciarPainel();
     }
 
-    document.getElementById("login-form").addEventListener("submit", async (e) => {
+    document.getElementById("login-form").addEventListener("submit", (e) => {
       e.preventDefault();
-      const usuarioDigitado = document.getElementById("usuario-input").value.trim().toLowerCase();
-      const senhaDigitada = document.getElementById("senha-input").value.trim();
+      const usuario = document.getElementById("usuario-input").value.trim().toLowerCase();
+      const senha = document.getElementById("senha-input").value.trim();
       const erroEl = document.getElementById("login-erro");
 
-      if (usuarioDigitado !== "stefania") {
-        erroEl.textContent = "Usuário incorreto. Digite Stefania.";
-        return;
-      }
-
-      erroEl.textContent = "Verificando...";
-
-      try {
-        const resp = await fetch("/api/posts", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": senhaDigitada
-          },
-          body: JSON.stringify({ acao: "validar" })
-        });
-
-        if (resp.status === 401) {
-          erroEl.textContent = "Senha incorreta. Tente novamente.";
-          return;
-        }
-
-        senhaAtual = senhaDigitada;
-        sessionStorage.setItem("fs_admin_pass", senhaAtual);
+      if (usuario === "stefania" && senha === senhaMaster) {
+        sessionStorage.setItem("fs_logado", "true");
         erroEl.textContent = "";
         iniciarPainel();
-      } catch (err) {
-        erroEl.textContent = "Erro de conexão com o servidor.";
+      } else {
+        erroEl.textContent = "Usuário ou senha incorretos.";
       }
     });
 
@@ -457,7 +436,7 @@
     }
 
     function sair() {
-      sessionStorage.removeItem("fs_admin_pass");
+      sessionStorage.removeItem("fs_logado");
       location.reload();
     }
 
@@ -558,7 +537,7 @@
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": senhaAtual
+            "Authorization": senhaMaster
           },
           body: JSON.stringify(payload)
         });
@@ -618,7 +597,7 @@
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": senhaAtual
+            "Authorization": senhaMaster
           },
           body: JSON.stringify({ acao: "excluir", id: id })
         });
